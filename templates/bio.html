@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://fonts.xz.style/serve/inter.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@exampledev/new.css@1.1.2/new.min.css">
+    <link rel='stylesheet' href='{{ url_for("static", filename="bio.css") }}'>
+    <link href='https://cdn.boxicons.com/fonts/basic/boxicons.min.css' rel='stylesheet'>
+    <link href='https://cdn.boxicons.com/fonts/brands/boxicons-brands.min.css' rel='stylesheet'> 
+    <script src="https://unpkg.com/@popperjs/core@2"></script>
+    <script src="https://unpkg.com/tippy.js@6"></script>   
+</head>
+<body>
+    <div class='flex'>
+        <img src='https://i.pinimg.com/736x/1f/17/f7/1f17f723b6cb88b0e0b635d0f594d971.jpg' id='pfp'>
+        <div>
+            <h1 id='username'>@mffr 
+                <i class='bx  bx-heart' id='supporter'></i> 
+                <i class='bx  bx-check-circle' id='verified'></i> 
+                <i class='bx  bx-crown' id='owner'></i> 
+                <i class='bx  bx-sapling' id='early'></i> 
+            </h1>
+            <i>"Quote, quote quote."</i>
+        </div>
+    </div>
+    <div class='links'>
+        <button class='link'>
+        <i class='bxl  bx-reddit'></i>
+        <span>Reddit</span>
+    </button>
+    <button class='link'>
+        <i class='bxl  bx-telegram'></i>
+        <span>Telegram</span>
+    </button>
+    <button class='link'>
+        <i class='bxl  bx-twitter'></i>
+        <span>Twitter</span>
+    </button>
+    </div>
+    <script>
+        tippy('#supporter', {content: 'Supporter'});
+        tippy('#verified', {content: 'Verified'});
+        tippy('#owner', {content: 'Owner'});
+        tippy('#early', {content: 'Early'});
+    </script>
+</body>
+</html>

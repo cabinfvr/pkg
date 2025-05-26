@@ -1,0 +1,8 @@
+.flex { display: flex; gap: 15px; align-items: center; }
+#pfp { width: 150px; border-radius: 1028px; height: 150px; }
+#early { color: #ADBF97; }
+#owner { color: #F4EBBE; }
+#verified { color: #A7CECB; }
+#supporter { color: #EA526F; }
+.link { width: 100%; display: flex; justify-content: center; align-items: center; gap: 5px; font-size: 20px; }
+.links { display: flex; flex-direction: column; gap: 5px; }
