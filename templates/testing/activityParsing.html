@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>activity parsing | testing site for pkg</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 2em; }
+        .activity { border: 1px solid #ccc; padding: 1em; border-radius: 8px; max-width: 500px; }
+        .album-art { width: 100px; height: 100px; object-fit: cover; border-radius: 8px; }
+        .label { font-weight: bold; }
+        .section { margin-top: 1em; }
+    </style>
+</head>
+<body>
+    <div class="activity">
+        <div><span class="label">Username:</span> {{ activity.username }}</div>
+        <div><span class="label">User ID:</span> {{ activity.user_id }}</div>
+        <div><span class="label">Status:</span> {{ activity.status }}</div>
+        <div><span class="label">Listening to Spotify:</span> {{ activity.listening_to_spotify }}</div>
+
+        {% if activity.spotify %}
+            <div class="section"><hr>
+                <div><span class="label">Song:</span> {{ activity.spotify.song }}</div>
+                <div><span class="label">Artist:</span> {{ activity.spotify.artist }}</div>
+                <div><span class="label">Album:</span> {{ activity.spotify.album }}</div>
+                {% if activity.spotify.album_art %}
+                    <div>
+                        <span class="label">Album Art:</span><br>
+                        <img src="{{ activity.spotify.album_art }}" alt="Album Art" class="album-art">
+                    </div>
+                {% endif %}
+                <div><span class="label">Start Timestamp:</span> {{ activity.spotify.start_timestamp }}</div>
+                <div><span class="label">End Timestamp:</span> {{ activity.spotify.end_timestamp }}</div>
+            </div>
+        {% endif %}
+
+        {% if activity.custom_status %}
+            <div class="section"><hr>
+                <div><span class="label">Custom Status:</span>
+                    {% if activity.custom_status.emoji %}
+                        <span>{{ activity.custom_status.emoji }}</span>
+                    {% endif %}
+                    <span>{{ activity.custom_status.state }}</span>
+                </div>
+                {% if activity.custom_status.end_timestamp %}
+                    <div><span class="label">Custom Status End:</span> {{ activity.custom_status.end_timestamp }}</div>
+                {% endif %}
+            </div>
+        {% endif %}
+
+        {% if activity.clan %}
+            <div class="section"><hr>
+                <div><span class="label">Clan Tag:</span> {{ activity.clan.tag }}</div>
+                <div><span class="label">Clan Guild ID:</span> {{ activity.clan.guild_id }}</div>
+                <div><span class="label">Clan Badge:</span> {{ activity.clan.badge }}</div>
+                <div><span class="label">Clan Identity Enabled:</span> {{ activity.clan.identity_enabled }}</div>
+            </div>
+        {% endif %}
+
+        {% if activity.primary_guild %}
+            <div class="section"><hr>
+                <div><span class="label">Primary Guild Tag:</span> {{ activity.primary_guild.tag }}</div>
+                <div><span class="label">Primary Guild ID:</span> {{ activity.primary_guild.guild_id }}</div>
+                <div><span class="label">Primary Guild Badge:</span> {{ activity.primary_guild.badge }}</div>
+                <div><span class="label">Primary Guild Identity Enabled:</span> {{ activity.primary_guild.identity_enabled }}</div>
+            </div>
+        {% endif %}
+    </div>
+</body>
+</html>

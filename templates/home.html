@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>pkg - connect everything</title>
+    <link href='https://cdn.boxicons.com/fonts/basic/boxicons.min.css' rel='stylesheet'>
+    <link href='https://cdn.boxicons.com/fonts/brands/boxicons-brands.min.css' rel='stylesheet'> 
+    <style>
+        .hero h1,address,area,article,aside,audio,blockquote,datalist,details,dl,fieldset,figure,form,iframe,img,input,meter,nav,ol,optgroup,option,output,p,pre,progress,ruby,section,table,textarea,ul,video{margin-bottom:1rem}.btn-secondary:hover,.platform-card:hover{background:var(--nc-bg-3)}.feature-card,.footer,.hero,.stat{text-align:center}.hero p,.stat-label{opacity:.8}:root{--nc-font-sans:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Oxygen,Ubuntu,Cantarell,'Open Sans','Helvetica Neue',sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol";--nc-font-mono:Consolas,monaco,'Ubuntu Mono','Liberation Mono','Courier New',Courier,monospace;--nc-tx-1:#000000;--nc-tx-2:#1A1A1A;--nc-bg-1:#FFFFFF;--nc-bg-2:#F6F8FA;--nc-bg-3:#E5E7EB;--nc-lk-1:#0070F3;--nc-lk-2:#0366D6;--nc-lk-tx:#FFFFFF;--nc-ac-1:#79FFE1;--nc-ac-tx:#0C4047}@media (prefers-color-scheme:dark){:root{--nc-tx-1:#ffffff;--nc-tx-2:#eeeeee;--nc-bg-1:#000000;--nc-bg-2:#111111;--nc-bg-3:#222222;--nc-lk-1:#3291FF;--nc-lk-2:#0070F3;--nc-lk-tx:#FFFFFF;--nc-ac-1:#7928CA;--nc-ac-tx:#FFFFFF}}*{margin:0;padding:0}button,html,input,select{font-family:var(--nc-font-sans)}body{margin:0 auto;max-width:750px;padding:2rem;border-radius:6px;overflow-x:hidden;word-break:break-word;overflow-wrap:break-word;background:var(--nc-bg-1);color:var(--nc-tx-2);font-size:1.03rem;line-height:1.5}::selection{background:var(--nc-ac-1);color:var(--nc-ac-tx)}.btn-secondary,.feature-card,blockquote,header{background:var(--nc-bg-2)}h1,h2,h3,h4,h5,h6{line-height:1;padding-top:.875rem;color:var(--nc-tx-1)}h1,h2,h3{padding-bottom:2px;margin-bottom:8px;border-bottom:1px solid var(--nc-bg-2)}h4,h5,h6{margin-bottom:.3rem}h1{font-size:2.25rem}h2{font-size:1.85rem}h3{font-size:1.55rem}h4{font-size:1.25rem}h5{font-size:1rem}h6{font-size:.875rem}a{color:var(--nc-lk-1)}a:hover{color:var(--nc-lk-2)}blockquote{padding:1.5rem;border-left:5px solid var(--nc-bg-3)}header{border-bottom:1px solid var(--nc-bg-3);padding:2rem 1.5rem;margin:-2rem calc(0px - (50vw - 50%)) 2rem;padding-left:calc(50vw - 50%);padding-right:calc(50vw - 50%)}header h1,header h2,header h3{padding-bottom:0;border-bottom:0}header>:first-child{margin-top:0;padding-top:0}a button,button,input[type=button],input[type=reset],input[type=submit]{font-size:1rem;display:inline-block;padding:6px 12px;text-align:center;text-decoration:none;white-space:nowrap;background:var(--nc-lk-1);color:var(--nc-lk-tx);border:0;border-radius:4px;box-sizing:border-box;cursor:pointer}button:hover,input[type=button]:hover,input[type=reset]:hover,input[type=submit]:hover{background:var(--nc-lk-2)}.hero{padding:3rem 0}.hero h1{font-size:3rem;background:linear-gradient(135deg,var(--nc-lk-1),var(--nc-ac-1));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}.hero p{font-size:1.2rem;margin-bottom:2rem}.cta-buttons{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;margin-bottom:3rem}.btn-secondary{color:var(--nc-tx-1);border:1px solid var(--nc-bg-3)}.feature-icon,.platform-icon,.stat-number{color:var(--nc-lk-1)}.features-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:2rem;margin:3rem 0}.feature-card{padding:2rem;border-radius:8px;border:1px solid var(--nc-bg-3);transition:transform .2s,box-shadow .2s}.feature-card:hover{transform:translateY(-4px);box-shadow:0 8px 25px rgba(0,0,0,.1)}.feature-icon{font-size:2.5rem;margin-bottom:1rem}.feature-card h3{margin-bottom:1rem;border-bottom:none;padding-bottom:0}.social-platforms{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:1rem;margin:2rem 0}.platform-card,.stats{display:flex;background:var(--nc-bg-2)}.platform-card{align-items:center;gap:.75rem;padding:1rem;border-radius:6px;border:1px solid var(--nc-bg-3);transition:.2s}.platform-card:hover{border-color:var(--nc-lk-1)}.platform-icon{font-size:1.5rem}.stats{justify-content:space-around;margin:3rem 0;padding:2rem;border-radius:8px;border:1px solid var(--nc-bg-3)}.stat-number{font-size:2rem;font-weight:700;display:block}.footer,.footer-links a,.stat-label{color:var(--nc-tx-2)}.footer{margin-top:4rem;padding:2rem 0;border-top:1px solid var(--nc-bg-3);opacity:.7}.footer-links{display:flex;justify-content:center;gap:2rem;margin-bottom:1rem;flex-wrap:wrap}.footer-links a{text-decoration:none;opacity:.8}.footer-links a:hover{opacity:1;color:var(--nc-lk-1)}@media (max-width:600px){.hero h1{font-size:2.5rem}.cta-buttons{flex-direction:column;align-items:center}.stats{flex-direction:column;gap:1rem}}
+    </style>
+    <link rel='shortcut icon' href='/static/package.svg'>
+</head>
+<body>
+    <div class="hero">
+        <h1>pkg</h1>
+        <p>connect all your social media platforms in one beautiful, customizable link-in-bio page</p>
+        
+        <div class="cta-buttons">
+            <button onclick="scrollToSection('features')">get started for free</button>
+            <button class="btn-secondary" onclick="scrollToSection('platforms')">view platforms</button>
+        </div>
+    </div>
+    
+    <div class="stats">
+        <div class="stat">
+            <span class="stat-number">1+</span>
+            <span class="stat-label">active users</span>
+        </div>
+        <div class="stat">
+            <span class="stat-number">15+</span>
+            <span class="stat-label">supported platforms</span>
+        </div>
+        <div class="stat">
+            <span class="stat-number">99.9%</span>
+            <span class="stat-label">uptime</span>
+        </div>
+    </div>
+    
+    <section id="features">
+        <h2>why choose pkg?</h2>
+        <div class="features-grid">
+            <div class="feature-card">
+                <i class="bx bx-palette feature-icon"></i>
+                <h3>Fully Customizable</h3>
+                <p>Design your page with custom themes, colors, and layouts that match your personal brand perfectly.</p>
+            </div>
+            
+            <div class="feature-card">
+                <i class="bx bx-rocket feature-icon"></i>
+                <h3>Lightning Fast</h3>
+                <p>Hosted on Vercel's edge network for blazing fast load times anywhere in the world.</p>
+            </div>
+            
+            <div class="feature-card">
+                <i class="bx bx-piggy-bank feature-icon"></i>
+                <h3>100% Free</h3>
+                <p>No hidden fees, no premium tiers, no catch. Create unlimited social hubs completely free.</p>
+            </div>
+            
+            <div class="feature-card">
+                <i class="bx bx-mobile-alt feature-icon"></i>
+                <h3>Mobile Optimized</h3>
+                <p>Your social hub looks perfect on every device - mobile, tablet, and desktop.</p>
+            </div>
+            
+            <div class="feature-card">
+                <i class="bx bx-chart-line feature-icon"></i>
+                <h3>Analytics</h3>
+                <p>Track your link clicks and engagement with built-in analytics dashboard.</p>
+            </div>
+            
+            <div class="feature-card">
+                <i class="bx bx-code-alt feature-icon"></i>
+                <h3>Developer Friendly</h3>
+                <p>Open source with full API access for developers who want to build custom integrations.</p>
+            </div>
+        </div>
+    </section>
+    
+    <section id="platforms">
+        <h2>Supported Platforms</h2>
+        <p>Connect all your favorite social media platforms and more:</p>
+        
+        <div class="social-platforms">
+            <div class="platform-card">
+                <i class="bxl bx-twitter platform-icon"></i>
+                <span>Twitter</span>
+            </div>
+            <div class="platform-card">
+                <i class="bxl bx-instagram platform-icon"></i>
+                <span>Instagram</span>
+            </div>
+            <div class="platform-card">
+                <i class="bxl bx-discord-alt platform-icon"></i>
+                <span>Discord</span>
+            </div>
+            <div class="platform-card">
+                <i class="bxl bx-github platform-icon"></i>
+                <span>GitHub</span>
+            </div>
+            <div class="platform-card">
+                <i class="bxl bx-linkedin platform-icon"></i>
+                <span>LinkedIn</span>
+            </div>
+            <div class="platform-card">
+                <i class="bxl bx-tiktok platform-icon"></i>
+                <span>TikTok</span>
+            </div>
+            <div class="platform-card">
+                <i class="bxl bx-youtube platform-icon"></i>
+                <span>YouTube</span>
+            </div>
+            <div class="platform-card">
+                <i class="bxl bx-twitch platform-icon"></i>
+                <span>Twitch</span>
+            </div>
+            <div class="platform-card">
+                <i class="bxl bx-reddit platform-icon"></i>
+                <span>Reddit</span>
+            </div>
+            <div class="platform-card">
+                <i class="bxl bx-facebook platform-icon"></i>
+                <span>Facebook</span>
+            </div>
+            <div class="platform-card">
+                <i class="bxl bx-pinterest platform-icon"></i>
+                <span>Pinterest</span>
+            </div>
+            <div class="platform-card">
+                <i class="bx bx-arrow-out-up-right-square platform-icon"></i>
+                <span>Custom Links</span>
+            </div>
+        </div>
+    </section>
+    
+    <section>
+        <h2>Getting Started</h2>
+        <blockquote>
+            <p><strong>Ready to create your social hub?</strong></p>
+            <p>It takes less than 2 minutes to set up your personalized link-in-bio page. Just start building.</p>
+        </blockquote>
+        
+        <div style="text-align: center; margin-top: 2rem;">
+            <button onclick="window.location = '/signup'">Create Your Hub Now</button>
+        </div>
+    </section>
+    
+    <footer class="footer">
+        <div class="footer-links">
+            <a href="#" onclick="alert('Coming Soon')">API Docs</a>
+            <a href="#" onclick="alert('Coming Soon')">Integration Guide</a>
+            <a href="https://github.com/mffr/pkg">Open Source</a>
+            <a href="#" onclick="alert('Coming Soon')">Support</a>
+            <a href="#" onclick="alert('Coming Soon')">Privacy</a>
+            <a href="#" onclick="alert('Coming Soon')">Terms</a>
+        </div>
+        <p>&copy; 2025 pkg. Made with ❤️ for creators everywhere.</p>
+    </footer>
+
+    <script>
+        function scrollToSection(e){document.getElementById(e).scrollIntoView({behavior:"smooth",block:"start"})}document.querySelectorAll('a[href^="#"]').forEach(e=>{e.addEventListener("click",function(e){e.preventDefault();let t=document.querySelector(this.getAttribute("href"));t&&t.scrollIntoView({behavior:"smooth",block:"start"})})});const observerOptions={threshold:.1,rootMargin:"0px 0px -100px 0px"},observer=new IntersectionObserver(e=>{e.forEach(e=>{e.isIntersecting&&(e.target.style.opacity="1",e.target.style.transform="translateY(0)")})},observerOptions);document.querySelectorAll(".feature-card, .platform-card").forEach(e=>{e.style.opacity="0",e.style.transform="translateY(20px)",e.style.transition="300ms ease-in-out",observer.observe(e)});
+    </script>
+</body>
+</html>

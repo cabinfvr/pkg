@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - pkg</title>
+    
+    <link rel="stylesheet" href="https://fonts.xz.style/serve/inter.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@exampledev/new.css@1.1.2/new.min.css">
+    <style>
+        body {
+            max-width: 400px;
+            margin: 2rem auto;
+            padding: 2rem;
+        }
+        .auth-container {
+            background: var(--nc-bg-2);
+            padding: 2rem;
+            border-radius: 8px;
+            border: 1px solid var(--nc-bg-3);
+        }
+        .form-group {
+            margin-bottom: 1rem;
+        }
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: var(--nc-tx-1);
+        }
+        input[type="text"],
+        input[type="password"] {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid var(--nc-bg-3);
+            border-radius: 4px;
+            background: var(--nc-bg-1);
+            color: var(--nc-tx-2);
+            font-size: 1rem;
+            box-sizing: border-box;
+        }
+        input[type="text"]:focus,
+        input[type="password"]:focus {
+            outline: none;
+            border-color: var(--nc-lk-1);
+            box-shadow: 0 0 0 2px rgba(var(--nc-lk-1), 0.1);
+        }
+        .btn-primary {
+            width: 100%;
+            background: var(--nc-lk-1);
+            color: var(--nc-lk-tx);
+            border: none;
+            padding: 0.75rem;
+            border-radius: 4px;
+            font-size: 1rem;
+            cursor: pointer;
+            margin-bottom: 1rem;
+        }
+        .btn-primary:hover {
+            background: var(--nc-lk-2);
+        }
+        .alert {
+            padding: 0.75rem;
+            border-radius: 4px;
+            margin-bottom: 1rem;
+        }
+        .alert-error {
+            background: #fee;
+            color: #c33;
+            border: 1px solid #fcc;
+        }
+        .alert-success {
+            background: #efe;
+            color: #363;
+            border: 1px solid #cfc;
+        }
+        .text-center {
+            text-align: center;
+        }
+        .text-muted {
+            color: var(--nc-tx-2);
+            font-size: 0.9rem;
+        }
+        a {
+            color: var(--nc-lk-1);
+            text-decoration: none;
+        }
+        a:hover {
+            color: var(--nc-lk-2);
+            text-decoration: underline;
+        }
+        h1 {
+            text-align: center;
+            margin-bottom: 2rem;
+            color: var(--nc-tx-1);
+        }
+    </style>
+</head>
+<body>
+    <div class="auth-container">
+        <h1>Login</h1>
+        
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="alert alert-{{ 'error' if category == 'error' else 'success' }}">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+        
+        <form method="POST">
+            <div class="form-group">
+                <label for="username">Username</label>
+                <input type="text" id="username" name="username" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" required>
+            </div>
+            
+            <button type="submit" class="btn-primary">Login</button>
+        </form>
+        
+        <div class="text-center">
+            <p class="text-muted">Don't have an account? <a href="{{ url_for('signup') }}">Sign up here</a></p>
+            <p><a href="{{ url_for('home') }}">← Back to Home</a></p>
+        </div>
+    </div>
+</body>
+</html>

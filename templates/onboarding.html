@@ -1,0 +1,725 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile Setup - pkg</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='pkg.css') }}">
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+</head>
+<body>
+    <div class="setup-container">
+        <header class="setup-header">
+            <div class="header-content">
+                <div class="logo-section">
+                    <h1><i class='bx bx-user-circle'></i> pkg</h1>
+                    <p class="subtitle">Create your digital presence</p>
+                </div>
+                <div class="progress-indicator">
+                    <div class="progress-step active">
+                        <div class="step-number">1</div>
+                        <span>Setup</span>
+                    </div>
+                    <div class="progress-line"></div>
+                    <div class="progress-step">
+                        <div class="step-number">2</div>
+                        <span>Preview</span>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <main class="setup-main">
+            <!-- Flash messages -->
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    <div class="messages-container">
+                        {% for category, message in messages %}
+                            <div class="alert alert-{{ category }}">
+                                <i class='bx bx-{{ "check-circle" if category == "success" else "error-circle" }}'></i>
+                                {{ message }}
+                            </div>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            {% endwith %}
+
+            <form method="POST" id="onboardingForm" class="setup-form">
+                <div class="form-grid">
+                    <!-- Profile Section -->
+                    <div class="form-section">
+                        <div class="section-header">
+                            <h2><i class='bx bx-user'></i> Profile Information</h2>
+                            <p>Tell us about yourself</p>
+                        </div>
+                        
+                        <div class="input-group">
+                            <label for="avatar_link">
+                                <i class='bx bx-image'></i> Profile Picture
+                            </label>
+                            <input type="url" id="avatar_link" name="avatar_link" 
+                                   placeholder="https://example.com/your-image.jpg"
+                                   class="input-field">
+                            <div class="input-help">Direct link to your profile picture</div>
+                            <div id="avatar_preview" class="avatar-preview"></div>
+                        </div>
+
+                        <div class="input-group">
+                            <label for="quote">
+                                <i class='bx bx-quote-alt-left'></i> Bio
+                            </label>
+                            <textarea id="quote" name="quote" rows="4" 
+                                      placeholder="Tell the world about yourself..."
+                                      class="input-field textarea-field"></textarea>
+                            <div class="input-help">
+                                <span>A status that represents you</span>
+                                <span class="char-counter">0/20</span>
+                            </div>
+                        </div>
+
+                        <div class="input-group">
+                            <label for="discord_id">
+                                <i class='bx bxl-discord-alt'></i> Discord ID
+                                <span class="optional-badge">Optional</span>
+                            </label>
+                            <input type="text" id="discord_id" name="discord_id" 
+                                   placeholder="123456789012345678"
+                                   class="input-field">
+                            <div class="input-help">Your Discord user ID for activity tracking</div>
+                        </div>
+                    </div>
+
+                    <!-- Social Links Section -->
+                    <div class="form-section">
+                        <div class="section-header">
+                            <h2><i class='bx bx-link'></i> Social Links</h2>
+                            <p>Connect your social presence</p>
+                        </div>
+
+                        <div class="quick-add-section">
+                            <h3><i class='bx bx-magic-wand'></i> Quick Add</h3>
+                            <p>Select platforms to quickly add common social links</p>
+                            <select id="quick_add_social" class="js-social-select" multiple="multiple" 
+                                    style="width: 100%;">
+                                <option value="github">GitHub</option>
+<option value="twitter">Twitter/X</option>
+<option value="linkedin">LinkedIn</option>
+<option value="instagram">Instagram</option>
+<option value="youtube">YouTube</option>
+<option value="tiktok">TikTok</option>
+<option value="spotify">Spotify</option>
+<option value="twitch">Twitch</option>
+<option value="replit">Replit</option>
+<option value="chess.com">Chess.com</option>
+<option value="discord">Discord</option>
+<option value="buy-me-a-coffee">Buy Me a Coffee</option>
+<option value="kickstarter">Kickstarter</option>
+<option value="dribbble">Dribbble</option>
+<option value="imdb">IMDb</option>
+<option value="slack">Slack</option>
+<option value="reddit">Reddit</option>
+<option value="behance">Behance</option>
+<option value="medium">Medium</option>
+<option value="messenger">Messenger</option>
+<option value="telegram">Telegram</option>
+<option value="steam">Steam</option>
+<option value="pinterest">Pinterest</option>
+<option value="whatsapp">WhatsApp</option>
+<option value="facebook">Facebook</option>
+<option value="snapchat">Snapchat</option>
+<option value="douyin">Douyin</option>
+<option value="qq">QQ</option>
+<option value="quora">Quora</option>
+<option value="tumblr">Tumblr</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-actions">
+                    <button type="button" class="btn-secondary" onclick="window.history.back()">
+                        <i class='bx bx-arrow-back'></i> Back
+                    </button>
+                    <button type="submit" class="btn-primary">
+                        <i class='bx bx-check'></i> Complete Setup
+                    </button>
+                </div>
+            </form>
+        </main>
+    </div>
+
+    <style>
+        /* Enhanced Styling */
+        .setup-container {
+            min-height: 100vh;
+            background: linear-gradient(135deg, var(--nc-bg-1) 0%, var(--nc-bg-2) 100%);
+        }
+
+        .setup-header {
+            background: var(--nc-bg-1);
+            border-bottom: 2px solid var(--nc-bg-3);
+            box-shadow: 0 2px 20px rgba(0,0,0,0.05);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1.5rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo-section h1 {
+            font-size: 1.8rem;
+            margin: 0;
+            color: var(--nc-lk-1);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .subtitle {
+            margin: 0.25rem 0 0 0;
+            color: var(--nc-tx-2);
+            font-size: 0.9rem;
+        }
+
+        .progress-indicator {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .progress-step {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--nc-tx-2);
+            font-size: 0.9rem;
+        }
+
+        .progress-step.active {
+            color: var(--nc-lk-1);
+        }
+
+        .step-number {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            background: var(--nc-bg-3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            font-size: 0.8rem;
+        }
+
+        .progress-step.active .step-number {
+            background: var(--nc-lk-1);
+            color: white;
+        }
+
+        .progress-line {
+            width: 40px;
+            height: 2px;
+            background: var(--nc-bg-3);
+        }
+
+        .setup-main {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .messages-container {
+            margin-bottom: 2rem;
+        }
+
+        .alert {
+            padding: 1rem 1.25rem;
+            margin-bottom: 1rem;
+            border-radius: 8px;
+            border: 1px solid transparent;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            font-weight: 500;
+        }
+        
+        .alert-success {
+            background: linear-gradient(135deg, #d4edda 0%, #c3e6cb 100%);
+            border-color: #c3e6cb;
+            color: #155724;
+        }
+        
+        .alert-error {
+            background: linear-gradient(135deg, #f8d7da 0%, #f5c6cb 100%);
+            border-color: #f5c6cb;
+            color: #721c24;
+        }
+
+        .setup-form {
+            background: var(--nc-bg-1);
+            border-radius: 12px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0;
+        }
+
+        .form-section {
+            padding: 2.5rem;
+            border-right: 1px solid var(--nc-bg-3);
+        }
+
+        .form-section:last-child {
+            border-right: none;
+        }
+
+        .section-header {
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid var(--nc-bg-2);
+        }
+
+        .section-header h2 {
+            font-size: 1.4rem;
+            margin: 0 0 0.5rem 0;
+            color: var(--nc-tx-1);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .section-header p {
+            margin: 0;
+            color: var(--nc-tx-2);
+            font-size: 0.95rem;
+        }
+
+        .input-group {
+            margin-bottom: 2rem;
+        }
+
+        .input-group label {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: var(--nc-tx-1);
+            font-size: 0.95rem;
+        }
+
+        .optional-badge {
+            background: var(--nc-bg-3);
+            color: var(--nc-tx-2);
+            padding: 0.2rem 0.5rem;
+            border-radius: 12px;
+            font-size: 0.75rem;
+            font-weight: 500;
+            margin-left: auto;
+        }
+
+        .input-field {
+            width: 100%;
+            padding: 0.875rem 1rem;
+            border: 2px solid var(--nc-bg-3);
+            border-radius: 8px;
+            background: var(--nc-bg-1);
+            color: var(--nc-tx-2);
+            font-size: 1rem;
+            transition: all 0.2s ease;
+            box-sizing: border-box;
+        }
+
+        .input-field:focus {
+            border-color: var(--nc-lk-1);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(var(--nc-lk-1), 0.1);
+        }
+
+        .textarea-field {
+            resize: vertical;
+            min-height: 100px;
+            font-family: inherit;
+        }
+
+        .input-help {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 0.5rem;
+            font-size: 0.85rem;
+            color: var(--nc-tx-2);
+        }
+
+        .char-counter {
+            font-weight: 500;
+            color: var(--nc-lk-1);
+        }
+
+        .avatar-preview {
+            margin-top: 1rem;
+            text-align: center;
+        }
+
+        .avatar-preview img {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid var(--nc-bg-3);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+        .social-links-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .social-input-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .social-input-group label {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: var(--nc-tx-1);
+            font-size: 0.9rem;
+        }
+
+        .social-input-group label i {
+            font-size: 1.1rem;
+            width: 20px;
+            text-align: center;
+        }
+
+        .social-input {
+            font-size: 0.9rem;
+        }
+
+        .quick-add-section {
+            background: var(--nc-bg-2);
+            padding: 1.5rem;
+            border-radius: 8px;
+            border: 1px solid var(--nc-bg-3);
+        }
+
+        .quick-add-section h3 {
+            font-size: 1.1rem;
+            margin: 0 0 0.5rem 0;
+            color: var(--nc-tx-1);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .quick-add-section p {
+            margin: 0 0 1rem 0;
+            color: var(--nc-tx-2);
+            font-size: 0.9rem;
+        }
+
+        .form-actions {
+            display: flex;
+            gap: 1rem;
+            justify-content: flex-end;
+            padding: 2rem 2.5rem;
+            background: var(--nc-bg-2);
+            border-top: 1px solid var(--nc-bg-3);
+        }
+
+        .btn-primary, .btn-secondary {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.875rem 1.75rem;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            text-decoration: none;
+            border: none;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--nc-lk-1) 0%, var(--nc-lk-2) 100%);
+            color: var(--nc-lk-tx);
+            box-shadow: 0 4px 12px rgba(var(--nc-lk-1), 0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(var(--nc-lk-1), 0.4);
+        }
+
+        .btn-secondary {
+            background: var(--nc-bg-3);
+            color: var(--nc-tx-2);
+            border: 2px solid var(--nc-bg-3);
+        }
+
+        .btn-secondary:hover {
+            background: var(--nc-bg-2);
+            border-color: var(--nc-tx-2);
+        }
+
+        /* Dark mode adjustments */
+        @media (prefers-color-scheme: dark) {
+            .setup-container {
+                background: linear-gradient(135deg, var(--nc-bg-1) 0%, #0a0a0a 100%);
+            }
+            
+            .alert-success {
+                background: linear-gradient(135deg, #1e4d2b 0%, #2d5a3d 100%);
+                border-color: #2d5a3d;
+                color: #86e29b;
+            }
+            
+            .alert-error {
+                background: linear-gradient(135deg, #4d1e20 0%, #5a2d2f 100%);
+                border-color: #5a2d2f;
+                color: #e28686;
+            }
+
+            .setup-form {
+                box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+            }
+        }
+
+        /* Responsive design */
+        @media (max-width: 1024px) {
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .form-section {
+                border-right: none;
+                border-bottom: 1px solid var(--nc-bg-3);
+            }
+
+            .form-section:last-child {
+                border-bottom: none;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                gap: 1rem;
+                text-align: center;
+            }
+
+            .setup-main {
+                padding: 1rem;
+            }
+
+            .form-section {
+                padding: 1.5rem;
+            }
+
+            .social-links-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .form-actions {
+                flex-direction: column-reverse;
+                padding: 1.5rem;
+            }
+
+            .form-actions button,
+            .form-actions a {
+                width: 100%;
+                justify-content: center;
+            }
+
+            .progress-indicator {
+                display: none;
+            }
+        }
+
+        /* Select2 enhancements */
+        .select2-container--custom .select2-selection--multiple {
+            min-height: 45px;
+            padding: 0.5rem;
+        }
+
+        .select2-container--custom .select2-selection--multiple .select2-selection__choice {
+            background: var(--nc-lk-1);
+            color: white;
+            border: none;
+            border-radius: 20px;
+            padding: 0.25rem 0.75rem;
+            margin: 0.25rem;
+        }
+    </style>
+
+    <script>
+        // Enhanced JavaScript functionality
+        $(document).ready(function() {
+            // Initialize Select2 for social platforms
+            $('.js-social-select').select2({
+                theme: 'custom',
+                placeholder: 'Select platforms to add quickly...',
+                allowClear: true
+            });
+
+            // Quick add social platforms
+            $('.js-social-select').on('change', function() {
+                const selectedPlatforms = $(this).val();
+                selectedPlatforms.forEach(platform => {
+                    const input = $(`#link_${platform}`);
+                    if (input.length && !input.val()) {
+                        input.focus().addClass('highlight-input');
+                        setTimeout(() => input.removeClass('highlight-input'), 2000);
+                    }
+                });
+            });
+
+            // Avatar preview functionality
+            $('#avatar_link').on('input', function() {
+                const url = this.value;
+                const preview = $('#avatar_preview');
+                
+                if (url) {
+                    preview.html(`<img src="${url}" alt="Avatar Preview" onerror="this.style.display='none'">`);
+                } else {
+                    preview.html('');
+                }
+            });
+
+            // Character counter for bio
+            $('#quote').on('input', function() {
+                const length = this.value.length;
+                const counter = $('.char-counter');
+                counter.text(`${length}/20`);
+                
+                if (length > 450) {
+                    counter.css('color', '#e74c3c');
+                } else if (length > 350) {
+                    counter.css('color', '#f39c12');
+                } else {
+                    counter.css('color', 'var(--nc-lk-1)');
+                }
+            });
+
+            // Auto-resize textarea
+            $('#quote').on('input', function() {
+                this.style.height = 'auto';
+                this.style.height = this.scrollHeight + 'px';
+            });
+
+            // Form validation with better UX
+            $('#onboardingForm').on('submit', function(e) {
+                const quote = $('#quote').val();
+                const discordId = $('#discord_id').val();
+                const avatarUrl = $('#avatar_link').val();
+                
+                let errors = [];
+                
+                if (quote.length > 20) {
+                    errors.push('Bio must be less than 20 characters');
+                }
+                
+                if (discordId && !/^\d{17,19}$/.test(discordId)) {
+                    errors.push('Discord ID must be 17-19 digits long');
+                }
+                
+                if (avatarUrl && !isValidUrl(avatarUrl)) {
+                    errors.push('Please enter a valid URL for your profile picture');
+                }
+                
+                if (errors.length > 0) {
+                    e.preventDefault();
+                    showErrors(errors);
+                    return false;
+                }
+                
+                // Show loading state
+                const submitBtn = $(this).find('button[type="submit"]');
+                submitBtn.html('<i class="bx bx-loader-alt bx-spin"></i> Setting up profile...');
+                submitBtn.prop('disabled', true);
+            });
+
+            // URL validation helper
+            function isValidUrl(string) {
+                try {
+                    new URL(string);
+                    return true;
+                } catch (_) {
+                    return false;
+                }
+            }
+
+            // Error display function
+            function showErrors(errors) {
+                const errorHtml = errors.map(error => 
+                    `<div class="alert alert-error">
+                        <i class='bx bx-error-circle'></i>
+                        ${error}
+                    </div>`
+                ).join('');
+                
+                $('.messages-container').html(errorHtml);
+                $('.setup-main')[0].scrollIntoView({ behavior: 'smooth' });
+            }
+
+            // Add highlight animation for focused inputs
+            $('.input-field').on('focus', function() {
+                $(this).parent().addClass('input-focused');
+            }).on('blur', function() {
+                $(this).parent().removeClass('input-focused');
+            });
+        });
+
+        // Add CSS for animations
+        const style = document.createElement('style');
+        style.textContent = `
+            .highlight-input {
+                animation: highlight 2s ease;
+            }
+            
+            @keyframes highlight {
+                0% { border-color: var(--nc-bg-3); }
+                50% { border-color: var(--nc-lk-1); box-shadow: 0 0 0 3px rgba(var(--nc-lk-1), 0.2); }
+                100% { border-color: var(--nc-bg-3); }
+            }
+            
+            .input-focused label {
+                color: var(--nc-lk-1);
+                transform: translateY(-2px);
+                transition: all 0.2s ease;
+            }
+            
+            .bx-spin {
+                animation: spin 1s linear infinite;
+            }
+            
+            @keyframes spin {
+                from { transform: rotate(0deg); }
+                to { transform: rotate(360deg); }
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
+</body>
+</html>

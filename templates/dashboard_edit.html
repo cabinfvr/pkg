@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Profile</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='pkg.css') }}">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+</head>
+<body>
+    <header>
+        <h1>Edit Your Profile</h1>
+        <nav>
+            <a href="{{ url_for('dashboard') }}">← Back to Dashboard</a>
+            <a href="{{ url_for('logout') }}">Logout</a>
+        </nav>
+    </header>
+
+    <main>
+        <!-- Flash Messages -->
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                <div class="flash-messages">
+                    {% for category, message in messages %}
+                        <div class="flash flash-{{ category }}">
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        {% endwith %}
+
+        <form method="POST" class="profile-form">
+            <fieldset>
+                <legend>Basic Information</legend>
+                
+                <div class="form-group">
+                    <label for="avatar_link">Avatar URL:</label>
+                    <input type="url" 
+                           id="avatar_link" 
+                           name="avatar_link" 
+                           value="{{ user_data.avatar_link if user_data.avatar_link else '' }}"
+                           placeholder="https://example.com/avatar.jpg">
+                    <small>Enter a direct link to your profile picture</small>
+                </div>
+
+                <div class="form-group">
+                    <label for="quote">Quote/Bio:</label>
+                    <textarea id="quote" 
+                              name="quote" 
+                              rows="3" 
+                              placeholder="Tell people about yourself...">{{ user_data.quote if user_data.quote else '' }}</textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="discord_id">Discord User ID (optional):</label>
+                    <input type="number" 
+                           id="discord_id" 
+                           name="discord_id" 
+                           value="{{ user_data.discord_id if user_data.discord_id else '' }}"
+                           placeholder="123456789012345678">
+                    <small>Your Discord user ID for activity display</small>
+                </div>
+            </fieldset>
+
+            <fieldset>
+                <legend>Social Links</legend>
+                <p>Add your social media and other links:</p>
+                
+                <div id="links-container">
+                    {% if user_data.links %}
+                        {% for service, info in user_data.links.items() %}
+                            <div class="form-group link-group">
+                                <label for="link_{{ service }}">
+                                    <i class="bx {{ info.bxl_class if info.bxl_class else 'bx-link' }}"></i>
+                                    {{ service.title() }}:
+                                </label>
+                                <input type="url" 
+                                       id="link_{{ service }}" 
+                                       name="link_{{ service }}" 
+                                       value="{{ info.link if info.link else '' }}"
+                                       placeholder="https://{{ service }}.com/username">
+                            </div>
+                        {% endfor %}
+                    {% endif %}
+                </div>
+
+                <div class="form-group">
+                    <label for="new-link-service">Add New Link:</label>
+                    <select id="new-link-service" class="service-select">
+                        <option value="">Select a service...</option>
+                        {% for logo in logos %}
+                            <option value="{{ logo.name.lower() }}" data-icon="{{ logo.bxl_class }}">
+                                {{ logo.name }}
+                            </option>
+                        {% endfor %}
+                    </select>
+                    <button type="button" id="add-link-btn" class="secondary-btn">Add Link</button>
+                </div>
+            </fieldset>
+
+            <div class="form-actions">
+                <button type="submit" class="primary-btn">Save Changes</button>
+                <a href="{{ url_for('dashboard') }}" class="secondary-btn">Cancel</a>
+            </div>
+        </form>
+
+        <!-- Preview Section -->
+        <section class="preview-section">
+            <h2>Preview</h2>
+            <div class="bio-preview">
+                <div class="profile-header">
+                    <img id="preview-avatar" 
+                         src="{{ user_data.avatar_link if user_data.avatar_link else 'https://via.placeholder.com/150' }}" 
+                         alt="Profile Picture"
+                         onerror="this.src='https://via.placeholder.com/150'">
+                    <div class="profile-info">
+                        <h3>{{ user_data.username }}</h3>
+                        <div class="badges">
+                            {% if user_data.badges %}
+                                {% for badge in user_data.badges %}
+                                    <span class="badge badge-{{ badge }}">{{ badge.title() }}</span>
+                                {% endfor %}
+                            {% endif %}
+                        </div>
+                        <p id="preview-quote">{{ user_data.quote if user_data.quote else 'No quote set' }}</p>
+                    </div>
+                </div>
+                <div class="social-links" id="preview-links">
+                    <!-- Links will be populated by JavaScript -->
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <style>
+        .flash-messages {
+            margin-bottom: 2rem;
+        }
+
+        .flash {
+            padding: 1rem;
+            margin-bottom: 1rem;
+            border-radius: 4px;
+            border-left: 4px solid;
+        }
+
+        .flash-success {
+            background-color: #d4edda;
+            color: #155724;
+            border-left-color: #28a745;
+        }
+
+        .flash-error {
+            background-color: #f8d7da;
+            color: #721c24;
+            border-left-color: #dc3545;
+        }
+
+        .profile-form {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--nc-tx-1);
+        }
+
+        .form-group label i {
+            margin-right: 0.5rem;
+            width: 20px;
+            text-align: center;
+        }
+
+        .form-group small {
+            display: block;
+            margin-top: 0.25rem;
+            color: var(--nc-tx-2);
+            font-size: 0.875rem;
+        }
+
+        .link-group {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 0.5rem;
+            background: var(--nc-bg-2);
+            border-radius: 4px;
+            margin-bottom: 0.5rem;
+        }
+
+        .link-group label {
+            min-width: 120px;
+            margin-bottom: 0;
+        }
+
+        .link-group input {
+            flex: 1;
+            margin-bottom: 0;
+        }
+
+        .service-select {
+            width: 200px;
+            margin-right: 1rem;
+        }
+
+        .form-actions {
+            display: flex;
+            gap: 1rem;
+            justify-content: flex-end;
+            margin-top: 2rem;
+            padding-top: 2rem;
+            border-top: 1px solid var(--nc-bg-3);
+        }
+
+        .primary-btn {
+            background: var(--nc-lk-1);
+            color: var(--nc-lk-tx);
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 4px;
+            text-decoration: none;
+            cursor: pointer;
+            font-weight: 600;
+        }
+
+        .primary-btn:hover {
+            background: var(--nc-lk-2);
+        }
+
+        .secondary-btn {
+            background: var(--nc-bg-2);
+            color: var(--nc-tx-1);
+            padding: 0.75rem 1.5rem;
+            border: 1px solid var(--nc-bg-3);
+            border-radius: 4px;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .secondary-btn:hover {
+            background: var(--nc-bg-3);
+        }
+
+        .preview-section {
+            margin-top: 3rem;
+            padding: 2rem;
+            background: var(--nc-bg-2);
+            border-radius: 8px;
+        }
+
+        .bio-preview {
+            max-width: 400px;
+            margin: 0 auto;
+            background: var(--nc-bg-1);
+            padding: 2rem;
+            border-radius: 8px;
+            border: 1px solid var(--nc-bg-3);
+        }
+
+        .profile-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .profile-header img {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-bottom: 1rem;
+        }
+
+        .profile-header h3 {
+            margin: 0.5rem 0;
+            color: var(--nc-tx-1);
+        }
+
+        .badges {
+            margin: 0.5rem 0;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 0.25rem 0.5rem;
+            margin: 0.125rem;
+            border-radius: 12px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .badge-verified {
+            background: #1DA1F2;
+            color: white;
+        }
+
+        .badge-supporter {
+            background: #FF6B6B;
+            color: white;
+        }
+
+        .badge-early {
+            background: #4ECDC4;
+            color: white;
+        }
+
+        .badge-owner {
+            background: #FFD93D;
+            color: #333;
+        }
+
+        .social-links {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .social-link {
+            display: inline-flex;
+            align-items: center;
+            padding: 0.5rem 1rem;
+            background: var(--nc-bg-2);
+            border-radius: 20px;
+            text-decoration: none;
+            color: var(--nc-tx-1);
+            transition: background-color 0.2s;
+        }
+
+        .social-link:hover {
+            background: var(--nc-bg-3);
+            color: var(--nc-tx-1);
+        }
+
+        .social-link i {
+            margin-right: 0.5rem;
+        }
+
+        nav {
+            display: flex;
+            gap: 1rem;
+        }
+
+        nav a {
+            color: var(--nc-lk-1);
+            text-decoration: none;
+        }
+
+        nav a:hover {
+            color: var(--nc-lk-2);
+        }
+    </style>
+
+    <script>
+        $(document).ready(function() {
+            // Initialize Select2 for service selection
+            $('.service-select').select2({
+                theme: 'custom',
+                placeholder: 'Select a service...',
+                allowClear: true
+            });
+
+            // Add new link functionality
+            $('#add-link-btn').click(function() {
+                const service = $('#new-link-service').val();
+                const serviceName = $('#new-link-service option:selected').text();
+                const icon = $('#new-link-service option:selected').data('icon');
+                
+                if (service) {
+                    // Check if link already exists
+                    if ($(`#link_${service}`).length > 0) {
+                        alert('Link for this service already exists!');
+                        return;
+                    }
+                    
+                    const linkHtml = `
+                        <div class="form-group link-group">
+                            <label for="link_${service}">
+                                <i class="bx ${icon || 'bx-link'}"></i>
+                                ${serviceName}:
+                            </label>
+                            <input type="url" 
+                                   id="link_${service}" 
+                                   name="link_${service}" 
+                                   placeholder="https://${service}.com/username"
+                                   class="link-input">
+                            <button type="button" class="remove-link-btn secondary-btn">Remove</button>
+                        </div>
+                    `;
+                    
+                    $('#links-container').append(linkHtml);
+                    $('#new-link-service').val('').trigger('change');
+                    updatePreview();
+                }
+            });
+
+            // Remove link functionality
+            $(document).on('click', '.remove-link-btn', function() {
+                $(this).closest('.link-group').remove();
+                updatePreview();
+            });
+
+            // Update preview on input changes
+            $('#avatar_link, #quote').on('input', updatePreview);
+            $(document).on('input', '.link-input', updatePreview);
+
+            // Update preview function
+            function updatePreview() {
+                // Update avatar
+                const avatarUrl = $('#avatar_link').val() || 'https://via.placeholder.com/150';
+                $('#preview-avatar').attr('src', avatarUrl);
+                
+                // Update quote
+                const quote = $('#quote').val() || 'No quote set';
+                $('#preview-quote').text(quote);
+                
+                // Update links
+                const linksContainer = $('#preview-links');
+                linksContainer.empty();
+                
+                $('.link-input').each(function() {
+                    const url = $(this).val();
+                    if (url) {
+                        const service = $(this).attr('name').replace('link_', '');
+                        const icon = $(this).closest('.link-group').find('i').attr('class');
+                        const serviceName = $(this).closest('.link-group').find('label').text().replace(':', '').trim();
+                        
+                        const linkHtml = `
+                            <a href="${url}" class="social-link" target="_blank" rel="noopener noreferrer">
+                                <i class="${icon}"></i>
+                                ${serviceName}
+                            </a>
+                        `;
+                        linksContainer.append(linkHtml);
+                    }
+                });
+            }
+
+            // Initial preview update
+            updatePreview();
+        });
+    </script>
+</body>
+</html>

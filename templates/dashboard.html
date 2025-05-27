@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - {{ user_data.username }}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='pkg.css') }}">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <style>
+        .dashboard-container {
+            display: grid;
+            gap: 2rem;
+            margin-top: 1rem;
+        }
+        
+        .profile-preview {
+            background: var(--nc-bg-2);
+            padding: 2rem;
+            border-radius: 8px;
+            border: 1px solid var(--nc-bg-3);
+            text-align: center;
+        }
+        
+        .profile-avatar {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            margin: 0 auto 1rem;
+            display: block;
+            object-fit: cover;
+            border: 3px solid var(--nc-bg-3);
+        }
+        
+        .profile-username {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--nc-tx-1);
+            margin-bottom: 0.5rem;
+        }
+        
+        .profile-quote {
+            color: var(--nc-tx-2);
+            font-style: italic;
+            margin-bottom: 1rem;
+        }
+        
+        .badges {
+            display: flex;
+            justify-content: center;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+            margin-bottom: 1rem;
+        }
+        
+        .badge {
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.875rem;
+            font-weight: 500;
+            border: 1px solid var(--nc-bg-3);
+        }
+        
+        .badge.supporter {
+            background: linear-gradient(135deg, #ff6b6b, #ee5a24);
+            color: white;
+            border-color: #ee5a24;
+        }
+        
+        .badge.verified {
+            background: linear-gradient(135deg, #4834d4, #6c5ce7);
+            color: white;
+            border-color: #6c5ce7;
+        }
+        
+        .badge.owner {
+            background: linear-gradient(135deg, #f39c12, #e67e22);
+            color: white;
+            border-color: #e67e22;
+        }
+        
+        .badge.early {
+            background: linear-gradient(135deg, #2ecc71, #27ae60);
+            color: white;
+            border-color: #27ae60;
+        }
+        
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+        
+        .social-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            background: var(--nc-bg-1);
+            border: 1px solid var(--nc-bg-3);
+            border-radius: 6px;
+            text-decoration: none;
+            color: var(--nc-tx-2);
+            transition: all 0.2s ease;
+        }
+        
+        .social-link:hover {
+            background: var(--nc-lk-1);
+            color: var(--nc-lk-tx);
+            transform: translateY(-2px);
+        }
+        
+        .dashboard-actions {
+            background: var(--nc-bg-2);
+            padding: 2rem;
+            border-radius: 8px;
+            border: 1px solid var(--nc-bg-3);
+        }
+        
+        .action-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+        
+        .action-card {
+            background: var(--nc-bg-1);
+            padding: 1.5rem;
+            border-radius: 6px;
+            border: 1px solid var(--nc-bg-3);
+            text-align: center;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+        
+        .action-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+        
+        .action-icon {
+            font-size: 2.5rem;
+            color: var(--nc-lk-1);
+            margin-bottom: 1rem;
+        }
+        
+        .action-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--nc-tx-1);
+            margin-bottom: 0.5rem;
+        }
+        
+        .action-description {
+            color: var(--nc-tx-2);
+            margin-bottom: 1rem;
+        }
+        
+        .header-nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+            border-bottom: 1px solid var(--nc-bg-3);
+            margin-bottom: 2rem;
+        }
+        
+        .nav-left {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        
+        .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        
+        .btn-secondary {
+            background: var(--nc-bg-2);
+            color: var(--nc-tx-2);
+            border: 1px solid var(--nc-bg-3);
+        }
+        
+        .btn-secondary:hover {
+            background: var(--nc-bg-3);
+            color: var(--nc-tx-1);
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+        
+        .stat-card {
+            background: var(--nc-bg-1);
+            padding: 1.5rem;
+            border-radius: 6px;
+            border: 1px solid var(--nc-bg-3);
+            text-align: center;
+        }
+        
+        .stat-number {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--nc-lk-1);
+            margin-bottom: 0.5rem;
+        }
+        
+        .stat-label {
+            color: var(--nc-tx-2);
+            font-size: 0.875rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+        
+        .flash-messages {
+            margin-bottom: 2rem;
+        }
+        
+        .flash-message {
+            padding: 1rem;
+            border-radius: 6px;
+            margin-bottom: 1rem;
+        }
+        
+        .flash-message.success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        
+        .flash-message.error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+        
+        @media (max-width: 768px) {
+            .header-nav {
+                flex-direction: column;
+                gap: 1rem;
+                text-align: center;
+            }
+            
+            .nav-left, .nav-right {
+                justify-content: center;
+            }
+            
+            .dashboard-container {
+                gap: 1rem;
+            }
+            
+            .action-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Navigation Header -->
+        <nav class="header-nav">
+            <div class="nav-left">
+                <h1><i class='bx bx-home'></i> Dashboard</h1>
+                <span class="badge">Welcome back, {{ user_data.username }}!</span>
+            </div>
+            <div class="nav-right">
+                <a href="{{ url_for('about', username=user_data.username) }}" class="btn-secondary">
+                    <i class='bx bx-show'></i> View Profile
+                </a>
+                <a href="{{ url_for('logout') }}" class="btn-secondary">
+                    <i class='bx bx-log-out'></i> Logout
+                </a>
+            </div>
+        </nav>
+
+        <!-- Flash Messages -->
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                <div class="flash-messages">
+                    {% for category, message in messages %}
+                        <div class="flash-message {{ category }}">
+                            <i class='bx {% if category == 'success' %}bx-check-circle{% else %}bx-error-circle{% endif %}'></i>
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        {% endwith %}
+
+        <div class="dashboard-container">
+            <!-- Profile Preview Section -->
+            <section class="profile-preview">
+                <img src="{{ bio_config.profile_picture_url }}" alt="Profile Picture" class="profile-avatar">
+                <div class="profile-username">{{ bio_config.username }}</div>
+                <div class="profile-quote">{{ bio_config.quote or 'No quote set yet.' }}</div>
+                
+                <!-- Badges -->
+                {% if bio_config.supporter or bio_config.verified or bio_config.owner or bio_config.early %}
+                <div class="badges">
+                    {% if bio_config.supporter %}
+                        <span class="badge supporter"><i class='bx bx-heart'></i> Supporter</span>
+                    {% endif %}
+                    {% if bio_config.verified %}
+                        <span class="badge verified"><i class='bx bx-badge-check'></i> Verified</span>
+                    {% endif %}
+                    {% if bio_config.owner %}
+                        <span class="badge owner"><i class='bx bx-crown'></i> Owner</span>
+                    {% endif %}
+                    {% if bio_config.early %}
+                        <span class="badge early"><i class='bx bx-time-five'></i> Early User</span>
+                    {% endif %}
+                </div>
+                {% endif %}
+
+                <!-- Social Links -->
+                {% if bio_config.links %}
+                <div class="social-links">
+                    {% for link in bio_config.links %}
+                        <a href="{{ link.url }}" target="_blank" class="social-link">
+                            <i class='bx {{ link.icon }}'></i>
+                            {{ link.name }}
+                        </a>
+                    {% endfor %}
+                </div>
+                {% endif %}
+            </section>
+
+            <!-- Quick Stats -->
+            <section class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-number">{{ bio_config.links|length if bio_config.links else 0 }}</div>
+                    <div class="stat-label">Social Links</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">{{ user_data.badges|length if user_data.badges else 0 }}</div>
+                    <div class="stat-label">Badges</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">{% if bio_config.discord_user_id %}✓{% else %}✗{% endif %}</div>
+                    <div class="stat-label">Discord Connected</div>
+                </div>
+            </section>
+
+            <!-- Dashboard Actions -->
+            <section class="dashboard-actions">
+                <h2><i class='bx bx-cog'></i> Profile Management</h2>
+                <div class="action-grid">
+                    <div class="action-card">
+                        <div class="action-icon">
+                            <i class='bx bx-edit'></i>
+                        </div>
+                        <div class="action-title">Edit Profile</div>
+                        <div class="action-description">Update your avatar, quote, and social links</div>
+                        <a href="{{ url_for('dashboard_edit') }}" class="button">Edit Profile</a>
+                    </div>
+
+                    <div class="action-card">
+                        <div class="action-icon">
+                            <i class='bx bx-show'></i>
+                        </div>
+                        <div class="action-title">View Public Profile</div>
+                        <div class="action-description">See how your profile appears to others</div>
+                        <a href="{{ url_for('about', username=user_data.username) }}" class="button" target="_blank">View Profile</a>
+                    </div>
+
+                    <div class="action-card">
+                        <div class="action-icon">
+                            <i class='bx bx-link'></i>
+                        </div>
+                        <div class="action-title">Share Profile</div>
+                        <div class="action-description">Copy your profile link to share with others</div>
+                        <button class="button" onclick="copyProfileLink()">Copy Link</button>
+                    </div>
+
+                    <div class="action-card">
+                        <div class="action-icon">
+                            <i class='bx bx-data'></i>
+                        </div>
+                        <div class="action-title">Export Data</div>
+                        <div class="action-description">Download your profile data as JSON</div>
+                        <button class="button btn-secondary" onclick="exportData()">Export JSON</button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Account Settings -->
+            <section class="dashboard-actions">
+                <h2><i class='bx bx-user-cog'></i> Account Settings</h2>
+                <div class="action-grid">
+                    <div class="action-card">
+                        <div class="action-icon">
+                            <i class='bx bx-lock'></i>
+                        </div>
+                        <div class="action-title">Change Password</div>
+                        <div class="action-description">Update your account password</div>
+                        <button class="button btn-secondary" onclick="alert('Password change feature coming soon!')">Change Password</button>
+                    </div>
+
+                    <div class="action-card">
+                        <div class="action-icon">
+                            <i class='bx bx-trash'></i>
+                        </div>
+                        <div class="action-title">Delete Account</div>
+                        <div class="action-description">Permanently delete your account and data</div>
+                        <button class="button btn-secondary" onclick="confirmDelete()">Delete Account</button>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <script>
+        function copyProfileLink() {
+            const profileUrl = window.location.origin + '{{ url_for("about", username=user_data.username) }}';
+            navigator.clipboard.writeText(profileUrl).then(() => {
+                // Create a temporary notification
+                const notification = document.createElement('div');
+                notification.className = 'flash-message success';
+                notification.innerHTML = '<i class="bx bx-check-circle"></i> Profile link copied to clipboard!';
+                notification.style.position = 'fixed';
+                notification.style.top = '20px';
+                notification.style.right = '20px';
+                notification.style.zIndex = '1000';
+                notification.style.animation = 'slideIn 0.3s ease';
+                
+                document.body.appendChild(notification);
+                
+                setTimeout(() => {
+                    notification.remove();
+                }, 3000);
+            }).catch(() => {
+                alert('Failed to copy link. Please copy manually: ' + profileUrl);
+            });
+        }
+
+        function exportData() {
+            const userData = {
+                username: '{{ user_data.username }}',
+                quote: '{{ user_data.quote or "" }}',
+                avatar_link: '{{ user_data.avatar_link or "" }}',
+                badges: {{ user_data.badges | tojson if user_data.badges else '[]' }},
+                links: {{ user_data.links | tojson if user_data.links else '{}' }},
+                discord_id: '{{ user_data.discord_id or "" }}'
+            };
+            
+            const dataStr = JSON.stringify(userData, null, 2);
+            const dataUri = 'data:application/json;charset=utf-8,'+ encodeURIComponent(dataStr);
+            
+            const exportFileDefaultName = '{{ user_data.username }}_profile_data.json';
+            
+            const linkElement = document.createElement('a');
+            linkElement.setAttribute('href', dataUri);
+            linkElement.setAttribute('download', exportFileDefaultName);
+            linkElement.click();
+        }
+
+        function confirmDelete() {
+            if (confirm('Are you sure you want to delete your account? This action cannot be undone.')) {
+                if (confirm('This will permanently delete all your data. Are you absolutely sure?')) {
+                    alert('Account deletion feature will be implemented soon. Please contact support for now.');
+                }
+            }
+        }
+
+        // Add slide-in animation for notifications
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes slideIn {
+                from {
+                    transform: translateX(100%);
+                    opacity: 0;
+                }
+                to {
+                    transform: translateX(0);
+                    opacity: 1;
+                }
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
+</body>
+</html>

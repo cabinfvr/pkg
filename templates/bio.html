@@ -3,47 +3,135 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <!-- page title changes dynamically with username -->
+    <title>@{{ username }}</title>
+    
+    <!-- import custom font -->
     <link rel="stylesheet" href="https://fonts.xz.style/serve/inter.css">
+    <!-- base css framework for styling -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@exampledev/new.css@1.1.2/new.min.css">
-    <link rel='stylesheet' href='{{ url_for("static", filename="bio.css") }}'>
-    <link href='https://cdn.boxicons.com/fonts/basic/boxicons.min.css' rel='stylesheet'>
-    <link href='https://cdn.boxicons.com/fonts/brands/boxicons-brands.min.css' rel='stylesheet'> 
+    <!-- bio-specific custom styles -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='bio.css') }}">
+    
+    <!-- icon fonts for badges and brands -->
+    <link href="https://cdn.boxicons.com/fonts/basic/boxicons.min.css" rel="stylesheet">
+    <link href="https://cdn.boxicons.com/fonts/brands/boxicons-brands.min.css" rel="stylesheet">
+    
+    <!-- tooltip dependencies -->
     <script src="https://unpkg.com/@popperjs/core@2"></script>
-    <script src="https://unpkg.com/tippy.js@6"></script>   
+    <script src="https://unpkg.com/tippy.js@6"></script>
+
+    <!-- animation css -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
+    />
 </head>
 <body>
+    <!-- profile header: user avatar + username + badges + quote -->
     <div class='flex'>
-        <img src='https://i.pinimg.com/736x/1f/17/f7/1f17f723b6cb88b0e0b635d0f594d971.jpg' id='pfp'>
+        <!-- user profile picture -->
+        <img src='{{ profile_picture_url }}' id='pfp'>
+        
         <div>
-            <h1 id='username'>@mffr 
-                <i class='bx  bx-heart' id='supporter'></i> 
-                <i class='bx  bx-check-circle' id='verified'></i> 
-                <i class='bx  bx-crown' id='owner'></i> 
-                <i class='bx  bx-sapling' id='early'></i> 
+            <!-- username and badges -->
+            <h1 id='username'>@{{ username }}
+                <!-- show supporter badge if user is supporter -->
+                {% if supporter %}<i class='bx bx-heart' id='supporter'></i>{% endif %}
+                <!-- show verified badge if user is verified -->
+                {% if verified %}<i class='bx bx-check-circle' id='verified'></i>{% endif %}
+                <!-- show owner badge if user is owner -->
+                {% if owner %}<i class='bx bx-crown' id='owner'></i>{% endif %}
+                <!-- show early adopter badge if user joined early -->
+                {% if early %}<i class='bx bx-sapling' id='early'></i>{% endif %}
             </h1>
-            <i>"Quote, quote quote."</i>
+            <!-- user quote or bio text -->
+            <i>"{{ quote }}"</i>
         </div>
     </div>
-    <div class='links'>
-        <button class='link'>
-        <i class='bxl  bx-reddit'></i>
-        <span>Reddit</span>
-    </button>
-    <button class='link'>
-        <i class='bxl  bx-telegram'></i>
-        <span>Telegram</span>
-    </button>
-    <button class='link'>
-        <i class='bxl  bx-twitter'></i>
-        <span>Twitter</span>
-    </button>
+
+    <!-- discord activity section: only visible if discord data is present -->
+    {% if discord_activity %}
+    <div class="discord-status {{ discord_activity.status }}">
+        <!-- discord status header: status dot + username + status text -->
+        <div class="status-header">
+            <div class="status-indicator {{ discord_activity.status }}"></div>
+            <div class="discord-username">{{ discord_activity.username }}</div>
+            <span style="font-size:0.9rem; color:var(--nc-tx-2);">({{ discord_activity.status|title }})</span>
+        </div>
+
+        <!-- show custom discord status with emoji if exists -->
+        {% if discord_activity.custom_status and discord_activity.custom_status.state %}
+        <div class="custom-status">
+            {% set ce = discord_activity.custom_status %}
+            {% if ce.emoji_id %}
+            <img src="https://cdn.discordapp.com/emojis/{{ ce.emoji_id }}.{{ 'gif' if ce.emoji_animated else 'png' }}?size=32"
+                 alt=":{{ ce.emoji_name }}:"
+                 class="emoji" />
+            {% endif %}
+            {{ ce.state }}
+        </div>
+        {% endif %}
+
+        <!-- spotify embed if user is listening on spotify -->
+        {% if discord_activity.listening_to_spotify and discord_activity.spotify %}
+        <div class="spotify-embed">
+            <iframe src="https://open.spotify.com/embed/track/{{ discord_activity.spotify.track_id }}?theme=0"
+                    width="100%" height="100" frameBorder="0" allowfullscreen 
+                    allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" 
+                    loading="lazy"></iframe>
+        </div>
+        {% endif %}
     </div>
+    
+    <!-- fallback for when discord data is missing -->
+    {% else %}
+        {% if discord_status %}
+        <div class="discord-status offline">
+            <div class="status-header">
+                <!-- show offline status indicator -->
+                <div class="status-indicator offline"></div>
+                <span>Discord status unavailable</span>
+            </div>
+        </div>
+        {% endif %}
+    {% endif %}
+
+    <!-- horizontal line separating sections -->
+    <hr>
+
+    <!-- social/external links section -->
+    <div class='links'>
+        <!-- loop through all links and create buttons -->
+        {% for link in links %}
+        <a href="{{ link.url }}">
+        <button id='link'>
+            <a href='{{ link.url }}' class='link'>
+                <!-- link icon --> 
+                <i class='bxl {{ link.icon }}'></i>
+                <!-- link name -->
+                <span>{{ link.name }}</span>
+            </a>
+        </button>
+    </a>
+        {% endfor %}
+    </div>
+
     <script>
+        // initialize tooltips for badges and spotify embed
         tippy('#supporter', {content: 'Supporter'});
         tippy('#verified', {content: 'Verified'});
         tippy('#owner', {content: 'Owner'});
         tippy('#early', {content: 'Early'});
+        tippy('.spotify-embed', {content: 'Now Playing'});
+
+        // reload page to manually refresh discord status
+        function refreshDiscordStatus() { 
+            window.location.reload(); 
+        }
+
+        // auto-refresh page every 30 seconds to keep discord status updated
+        setInterval(() => window.location.reload(), 30000);
     </script>
 </body>
 </html>
