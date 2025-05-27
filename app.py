@@ -9,10 +9,10 @@ import secrets
 from functools import wraps
 
 app = Flask(__name__)
-app.secret_key = 'your-secret-key-change-this'  # Change this to a secure secret key
+app.secret_key = os.environ['SECRET_KEY']  # Change this to a secure secret key
 
-SUPABASE_URL = 'https://mgakygodluzqinfloaim.supabase.co' 
-SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1nYWt5Z29kbHV6cWluZmxvYWltIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc0ODM2OTI1MSwiZXhwIjoyMDYzOTQ1MjUxfQ.dCFA2KA-H-hXZOGitGW25ofjEYxj7TnsLdKRL7dtAoE'
+SUPABASE_URL = os.environ['SUPABASE_URL']
+SUPABASE_KEY = os.environ['SUPABASE_KEY']
 
 supabase: Client = create_client(SUPABASE_URL, SUPABASE_KEY)
 
