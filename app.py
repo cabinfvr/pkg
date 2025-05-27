@@ -7,6 +7,7 @@ import hashlib
 import json 
 import secrets
 from functools import wraps
+import os
 
 app = Flask(__name__)
 app.secret_key = os.environ['SECRET_KEY']  # Change this to a secure secret key
