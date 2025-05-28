@@ -10,7 +10,7 @@ from functools import wraps
 import os
 
 app = Flask(__name__)
-app.secret_key = os.environ['SECRET_KEY']  # Change this to a secure secret key
+app.secret_key = os.environ['SECRET_KEY'] 
 
 SUPABASE_URL = os.environ['SUPABASE_URL']
 SUPABASE_KEY = os.environ['SUPABASE_KEY']
