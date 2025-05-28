@@ -5,161 +5,660 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>pkg - connect everything</title>
     <link href='https://cdn.boxicons.com/fonts/basic/boxicons.min.css' rel='stylesheet'>
-    <link href='https://cdn.boxicons.com/fonts/brands/boxicons-brands.min.css' rel='stylesheet'> 
+    <link href='https://cdn.boxicons.com/fonts/brands/boxicons-brands.min.css' rel='stylesheet'>
     <style>
-        .hero h1,address,area,article,aside,audio,blockquote,datalist,details,dl,fieldset,figure,form,iframe,img,input,meter,nav,ol,optgroup,option,output,p,pre,progress,ruby,section,table,textarea,ul,video{margin-bottom:1rem}.btn-secondary:hover,.platform-card:hover{background:var(--nc-bg-3)}.feature-card,.footer,.hero,.stat{text-align:center}.hero p,.stat-label{opacity:.8}:root{--nc-font-sans:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Oxygen,Ubuntu,Cantarell,'Open Sans','Helvetica Neue',sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol";--nc-font-mono:Consolas,monaco,'Ubuntu Mono','Liberation Mono','Courier New',Courier,monospace;--nc-tx-1:#000000;--nc-tx-2:#1A1A1A;--nc-bg-1:#FFFFFF;--nc-bg-2:#F6F8FA;--nc-bg-3:#E5E7EB;--nc-lk-1:#0070F3;--nc-lk-2:#0366D6;--nc-lk-tx:#FFFFFF;--nc-ac-1:#79FFE1;--nc-ac-tx:#0C4047}@media (prefers-color-scheme:dark){:root{--nc-tx-1:#ffffff;--nc-tx-2:#eeeeee;--nc-bg-1:#000000;--nc-bg-2:#111111;--nc-bg-3:#222222;--nc-lk-1:#3291FF;--nc-lk-2:#0070F3;--nc-lk-tx:#FFFFFF;--nc-ac-1:#7928CA;--nc-ac-tx:#FFFFFF}}*{margin:0;padding:0}button,html,input,select{font-family:var(--nc-font-sans)}body{margin:0 auto;max-width:750px;padding:2rem;border-radius:6px;overflow-x:hidden;word-break:break-word;overflow-wrap:break-word;background:var(--nc-bg-1);color:var(--nc-tx-2);font-size:1.03rem;line-height:1.5}::selection{background:var(--nc-ac-1);color:var(--nc-ac-tx)}.btn-secondary,.feature-card,blockquote,header{background:var(--nc-bg-2)}h1,h2,h3,h4,h5,h6{line-height:1;padding-top:.875rem;color:var(--nc-tx-1)}h1,h2,h3{padding-bottom:2px;margin-bottom:8px;border-bottom:1px solid var(--nc-bg-2)}h4,h5,h6{margin-bottom:.3rem}h1{font-size:2.25rem}h2{font-size:1.85rem}h3{font-size:1.55rem}h4{font-size:1.25rem}h5{font-size:1rem}h6{font-size:.875rem}a{color:var(--nc-lk-1)}a:hover{color:var(--nc-lk-2)}blockquote{padding:1.5rem;border-left:5px solid var(--nc-bg-3)}header{border-bottom:1px solid var(--nc-bg-3);padding:2rem 1.5rem;margin:-2rem calc(0px - (50vw - 50%)) 2rem;padding-left:calc(50vw - 50%);padding-right:calc(50vw - 50%)}header h1,header h2,header h3{padding-bottom:0;border-bottom:0}header>:first-child{margin-top:0;padding-top:0}a button,button,input[type=button],input[type=reset],input[type=submit]{font-size:1rem;display:inline-block;padding:6px 12px;text-align:center;text-decoration:none;white-space:nowrap;background:var(--nc-lk-1);color:var(--nc-lk-tx);border:0;border-radius:4px;box-sizing:border-box;cursor:pointer}button:hover,input[type=button]:hover,input[type=reset]:hover,input[type=submit]:hover{background:var(--nc-lk-2)}.hero{padding:3rem 0}.hero h1{font-size:3rem;background:linear-gradient(135deg,var(--nc-lk-1),var(--nc-ac-1));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}.hero p{font-size:1.2rem;margin-bottom:2rem}.cta-buttons{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;margin-bottom:3rem}.btn-secondary{color:var(--nc-tx-1);border:1px solid var(--nc-bg-3)}.feature-icon,.platform-icon,.stat-number{color:var(--nc-lk-1)}.features-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:2rem;margin:3rem 0}.feature-card{padding:2rem;border-radius:8px;border:1px solid var(--nc-bg-3);transition:transform .2s,box-shadow .2s}.feature-card:hover{transform:translateY(-4px);box-shadow:0 8px 25px rgba(0,0,0,.1)}.feature-icon{font-size:2.5rem;margin-bottom:1rem}.feature-card h3{margin-bottom:1rem;border-bottom:none;padding-bottom:0}.social-platforms{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:1rem;margin:2rem 0}.platform-card,.stats{display:flex;background:var(--nc-bg-2)}.platform-card{align-items:center;gap:.75rem;padding:1rem;border-radius:6px;border:1px solid var(--nc-bg-3);transition:.2s}.platform-card:hover{border-color:var(--nc-lk-1)}.platform-icon{font-size:1.5rem}.stats{justify-content:space-around;margin:3rem 0;padding:2rem;border-radius:8px;border:1px solid var(--nc-bg-3)}.stat-number{font-size:2rem;font-weight:700;display:block}.footer,.footer-links a,.stat-label{color:var(--nc-tx-2)}.footer{margin-top:4rem;padding:2rem 0;border-top:1px solid var(--nc-bg-3);opacity:.7}.footer-links{display:flex;justify-content:center;gap:2rem;margin-bottom:1rem;flex-wrap:wrap}.footer-links a{text-decoration:none;opacity:.8}.footer-links a:hover{opacity:1;color:var(--nc-lk-1)}@media (max-width:600px){.hero h1{font-size:2.5rem}.cta-buttons{flex-direction:column;align-items:center}.stats{flex-direction:column;gap:1rem}}
+        :root {
+            --primary-blue: #0070F3;
+            --primary-blue-dark: #0366D6;
+            --dark-bg: #000000;
+            --dark-bg-secondary: #0a0a0a;
+            --dark-bg-tertiary: #111111;
+            --card-bg: #1a1a1a;
+            --text-primary: #ffffff;
+            --text-secondary: #a0a0a0;
+            --text-muted: #666666;
+            --border-color: #333333;
+            --accent-green: #00ff88;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: var(--dark-bg);
+            color: var(--text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Navigation */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            padding: 1rem 2rem;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary-blue);
+        }
+
+        .nav-actions {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .btn {
+            padding: 0.5rem 1.5rem;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            font-size: 0.9rem;
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--text-secondary);
+            border: 1px solid var(--border-color);
+        }
+
+        .btn-secondary:hover {
+            background: var(--card-bg);
+            color: var(--text-primary);
+        }
+
+        .btn-primary {
+            background: var(--primary-blue);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: var(--primary-blue-dark);
+            transform: translateY(-1px);
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 2rem;
+            position: relative;
+            background: radial-gradient(ellipse at center, rgba(0, 112, 243, 0.1) 0%, transparent 70%);
+        }
+
+        .hero-content {
+            max-width: 800px;
+            z-index: 2;
+        }
+
+        .hero h1 {
+            font-size: clamp(3rem, 8vw, 6rem);
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(135deg, var(--text-primary) 0%, var(--primary-blue) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+              line-height: 5rem;
+            padding-top: 1rem;
+            padding-bottom: 1rem;
+            overflow-wrap: break-word;
+            word-break: break-word;
+        }
+
+        .hero-subtitle {
+            font-size: 1.25rem;
+            color: var(--text-secondary);
+            margin-bottom: 3rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .hero-cta {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-bottom: 4rem;
+        }
+
+        .hero-cta .btn {
+            padding: 1rem 2rem;
+            font-size: 1rem;
+        }
+
+        /* Stats Section */
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .stat {
+            text-align: center;
+            padding: 1.5rem;
+            background: var(--card-bg);
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--primary-blue);
+            display: block;
+        }
+
+        .stat-label {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            margin-top: 0.5rem;
+        }
+
+        /* Features Grid */
+        .features-section {
+            padding: 6rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 3rem;
+            color: var(--text-primary);
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-bottom: 4rem;
+        }
+
+        .feature-card {
+            background: var(--card-bg);
+            padding: 2rem;
+            border-radius: 16px;
+            border: 1px solid var(--border-color);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, var(--primary-blue), var(--accent-green));
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-4px);
+            border-color: var(--primary-blue);
+            box-shadow: 0 20px 40px rgba(0, 112, 243, 0.1);
+        }
+
+        .feature-card:hover::before {
+            opacity: 1;
+        }
+
+        .feature-icon {
+            font-size: 2.5rem;
+            color: var(--primary-blue);
+            margin-bottom: 1.5rem;
+        }
+
+        .feature-card h3 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: var(--text-primary);
+        }
+
+        .feature-card p {
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        /* Platforms Section */
+        .platforms-section {
+            padding: 4rem 2rem;
+            background: var(--dark-bg-secondary);
+        }
+
+        .platforms-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .platforms-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        .platform-card {
+            background: var(--card-bg);
+            padding: 1.5rem 1rem;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .platform-card:hover {
+            transform: translateY(-2px);
+            border-color: var(--primary-blue);
+            background: var(--dark-bg-tertiary);
+        }
+
+        .platform-icon {
+            font-size: 1.5rem;
+            color: var(--primary-blue);
+        }
+
+        .platform-card span {
+            font-weight: 500;
+            color: var(--text-primary);
+        }
+
+        /* CTA Section */
+        .cta-section {
+            padding: 6rem 2rem;
+            text-align: center;
+            background: linear-gradient(135deg, var(--dark-bg) 0%, var(--dark-bg-secondary) 100%);
+        }
+
+        .cta-content {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 3rem;
+            background: var(--card-bg);
+            border-radius: 20px;
+            border: 1px solid var(--border-color);
+        }
+
+        .cta-content h2 {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: var(--text-primary);
+        }
+
+        .cta-content p {
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+            font-size: 1.1rem;
+        }
+
+        /* Footer */
+        .footer {
+            padding: 3rem 2rem 2rem;
+            border-top: 1px solid var(--border-color);
+            background: var(--dark-bg-secondary);
+        }
+
+        .footer-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .footer-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: var(--primary-blue);
+        }
+
+        .footer-text {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .animate-on-scroll {
+            opacity: 0;
+            animation: fadeInUp 0.6s ease forwards;
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            .navbar {
+                padding: 1rem;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .hero h1 {
+                font-size: 3rem;
+            }
+
+            .hero-cta {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .platforms-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .stats {
+                grid-template-columns: 1fr;
+            }
+        }
     </style>
-    <link rel='shortcut icon' href='/static/package.svg'>
 </head>
 <body>
-    <div class="hero">
-        <h1>pkg</h1>
-        <p>connect all your social media platforms in one beautiful, customizable link-in-bio page</p>
-        
-        <div class="cta-buttons">
-            <button onclick="scrollToSection('features')">get started for free</button>
-            <button class="btn-secondary" onclick="scrollToSection('platforms')">view platforms</button>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="#" class="logo">pkg</a>
+            <ul class="nav-links">
+                <li><a href="#features">Features</a></li>
+                <li><a href="#platforms">Platforms</a></li>
+                <li><a href="#docs">Docs</a></li>
+            </ul>
+            <div class="nav-actions">
+                <a href="#" class="btn btn-secondary">Login</a>
+                <a href="#" class="btn btn-primary">Register</a>
+            </div>
         </div>
-    </div>
-    
-    <div class="stats">
-        <div class="stat">
-            <span class="stat-number">1+</span>
-            <span class="stat-label">active users</span>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1 style='line-height: 5rem; overflow: visible;'>everything you want, right here.</h1>
+            <p class="hero-subtitle">connect all your social media platforms in one beautiful, customizable link-in-bio page</p>
+            
+            <div class="hero-cta">
+                <a href="#" class="btn btn-primary">Get Started</a>
+                <a href="#platforms" class="btn btn-secondary">View Platforms</a>
+            </div>
+
+            <div class="stats">
+                <div class="stat">
+                    <span class="stat-number">1+</span>
+                    <span class="stat-label">Active Users</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-number">15+</span>
+                    <span class="stat-label">Platforms</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-number">99.9%</span>
+                    <span class="stat-label">Uptime</span>
+                </div>
+            </div>
         </div>
-        <div class="stat">
-            <span class="stat-number">15+</span>
-            <span class="stat-label">supported platforms</span>
-        </div>
-        <div class="stat">
-            <span class="stat-number">99.9%</span>
-            <span class="stat-label">uptime</span>
-        </div>
-    </div>
-    
-    <section id="features">
-        <h2>why choose pkg?</h2>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="features-section">
+        <h2 class="section-title">Why choose pkg?</h2>
         <div class="features-grid">
-            <div class="feature-card">
+            <div class="feature-card animate-on-scroll">
                 <i class="bx bx-palette feature-icon"></i>
                 <h3>Fully Customizable</h3>
-                <p>Design your page with custom themes, colors, and layouts that match your personal brand perfectly.</p>
+                <p>Design your page with custom themes, colors, and layouts that match your personal brand perfectly. Complete creative control at your fingertips.</p>
             </div>
             
-            <div class="feature-card">
+            <div class="feature-card animate-on-scroll">
                 <i class="bx bx-rocket feature-icon"></i>
                 <h3>Lightning Fast</h3>
-                <p>Hosted on Vercel's edge network for blazing fast load times anywhere in the world.</p>
+                <p>Hosted on Vercel's edge network for blazing fast load times anywhere in the world. Your audience won't wait, and neither should you.</p>
             </div>
             
-            <div class="feature-card">
-                <i class="bx bx-piggy-bank feature-icon"></i>
+            <div class="feature-card animate-on-scroll">
+                <i class="bx bx-shield-check feature-icon"></i>
                 <h3>100% Free</h3>
-                <p>No hidden fees, no premium tiers, no catch. Create unlimited social hubs completely free.</p>
+                <p>No hidden fees, no premium tiers, no catch. Create unlimited social hubs completely free with enterprise-grade reliability.</p>
             </div>
             
-            <div class="feature-card">
+            <div class="feature-card animate-on-scroll">
                 <i class="bx bx-mobile-alt feature-icon"></i>
                 <h3>Mobile Optimized</h3>
-                <p>Your social hub looks perfect on every device - mobile, tablet, and desktop.</p>
+                <p>Your social hub looks perfect on every device - mobile, tablet, and desktop. Responsive design that adapts beautifully.</p>
             </div>
             
-            <div class="feature-card">
+            <div class="feature-card animate-on-scroll">
                 <i class="bx bx-chart-line feature-icon"></i>
-                <h3>Analytics</h3>
-                <p>Track your link clicks and engagement with built-in analytics dashboard.</p>
+                <h3>Advanced Analytics</h3>
+                <p>Track your link clicks, engagement, and audience insights with our comprehensive analytics dashboard. Data-driven growth.</p>
             </div>
             
-            <div class="feature-card">
+            <div class="feature-card animate-on-scroll">
                 <i class="bx bx-code-alt feature-icon"></i>
                 <h3>Developer Friendly</h3>
-                <p>Open source with full API access for developers who want to build custom integrations.</p>
+                <p>Open source with full API access for developers who want to build custom integrations. Extensible and powerful.</p>
             </div>
         </div>
     </section>
-    
-    <section id="platforms">
-        <h2>Supported Platforms</h2>
-        <p>Connect all your favorite social media platforms and more:</p>
-        
-        <div class="social-platforms">
-            <div class="platform-card">
-                <i class="bxl bx-twitter platform-icon"></i>
-                <span>Twitter</span>
-            </div>
-            <div class="platform-card">
-                <i class="bxl bx-instagram platform-icon"></i>
-                <span>Instagram</span>
-            </div>
-            <div class="platform-card">
-                <i class="bxl bx-discord-alt platform-icon"></i>
-                <span>Discord</span>
-            </div>
-            <div class="platform-card">
-                <i class="bxl bx-github platform-icon"></i>
-                <span>GitHub</span>
-            </div>
-            <div class="platform-card">
-                <i class="bxl bx-linkedin platform-icon"></i>
-                <span>LinkedIn</span>
-            </div>
-            <div class="platform-card">
-                <i class="bxl bx-tiktok platform-icon"></i>
-                <span>TikTok</span>
-            </div>
-            <div class="platform-card">
-                <i class="bxl bx-youtube platform-icon"></i>
-                <span>YouTube</span>
-            </div>
-            <div class="platform-card">
-                <i class="bxl bx-twitch platform-icon"></i>
-                <span>Twitch</span>
-            </div>
-            <div class="platform-card">
-                <i class="bxl bx-reddit platform-icon"></i>
-                <span>Reddit</span>
-            </div>
-            <div class="platform-card">
-                <i class="bxl bx-facebook platform-icon"></i>
-                <span>Facebook</span>
-            </div>
-            <div class="platform-card">
-                <i class="bxl bx-pinterest platform-icon"></i>
-                <span>Pinterest</span>
-            </div>
-            <div class="platform-card">
-                <i class="bx bx-arrow-out-up-right-square platform-icon"></i>
-                <span>Custom Links</span>
+
+    <!-- Platforms Section -->
+    <section id="platforms" class="platforms-section">
+        <div class="platforms-container">
+            <h2 class="section-title">Supported Platforms</h2>
+            <p style="text-align: center; color: var(--text-secondary); margin-bottom: 2rem;">Connect all your favorite social media platforms and more</p>
+            
+            <div class="platforms-grid">
+                <div class="platform-card">
+                    <i class="bxl bx-twitter platform-icon"></i>
+                    <span>Twitter</span>
+                </div>
+                <div class="platform-card">
+                    <i class="bxl bx-instagram platform-icon"></i>
+                    <span>Instagram</span>
+                </div>
+                <div class="platform-card">
+                    <i class="bxl bx-discord-alt platform-icon"></i>
+                    <span>Discord</span>
+                </div>
+                <div class="platform-card">
+                    <i class="bxl bx-github platform-icon"></i>
+                    <span>GitHub</span>
+                </div>
+                <div class="platform-card">
+                    <i class="bxl bx-linkedin platform-icon"></i>
+                    <span>LinkedIn</span>
+                </div>
+                <div class="platform-card">
+                    <i class="bxl bx-tiktok platform-icon"></i>
+                    <span>TikTok</span>
+                </div>
+                <div class="platform-card">
+                    <i class="bxl bx-youtube platform-icon"></i>
+                    <span>YouTube</span>
+                </div>
+                <div class="platform-card">
+                    <i class="bxl bx-twitch platform-icon"></i>
+                    <span>Twitch</span>
+                </div>
+                <div class="platform-card">
+                    <i class="bxl bx-reddit platform-icon"></i>
+                    <span>Reddit</span>
+                </div>
+                <div class="platform-card">
+                    <i class="bxl bx-facebook platform-icon"></i>
+                    <span>Facebook</span>
+                </div>
+                <div class="platform-card">
+                    <i class="bxl bx-pinterest platform-icon"></i>
+                    <span>Pinterest</span>
+                </div>
+                <div class="platform-card">
+                    <i class="bx bx-link-external platform-icon"></i>
+                    <span>Custom Links</span>
+                </div>
             </div>
         </div>
     </section>
-    
-    <section>
-        <h2>Getting Started</h2>
-        <blockquote>
-            <p><strong>Ready to create your social hub?</strong></p>
-            <p>It takes less than 2 minutes to set up your personalized link-in-bio page. Just start building.</p>
-        </blockquote>
-        
-        <div style="text-align: center; margin-top: 2rem;">
-            <button onclick="window.location = '/signup'">Create Your Hub Now</button>
+
+    <!-- CTA Section -->
+    <section class="cta-section">
+        <div class="cta-content">
+            <h2>Ready to create your social hub?</h2>
+            <p>It takes less than 2 minutes to set up your personalized link-in-bio page. Join thousands of creators who've already made the switch.</p>
+            <a href="#" class="btn btn-primary" style="padding: 1rem 2rem; font-size: 1.1rem;">Create Your Hub Now</a>
         </div>
     </section>
-    
+
+    <!-- Footer -->
     <footer class="footer">
-        <div class="footer-links">
-            <a href="#" onclick="alert('Coming Soon')">API Docs</a>
-            <a href="#" onclick="alert('Coming Soon')">Integration Guide</a>
-            <a href="https://github.com/mffr/pkg">Open Source</a>
-            <a href="#" onclick="alert('Coming Soon')">Support</a>
-            <a href="#" onclick="alert('Coming Soon')">Privacy</a>
-            <a href="#" onclick="alert('Coming Soon')">Terms</a>
+        <div class="footer-container">
+            <div class="footer-links">
+                <a href="#">API Docs</a>
+                <a href="#">Integration Guide</a>
+                <a href="https://github.com/mffr/pkg">Open Source</a>
+                <a href="#">Support</a>
+                <a href="#">Privacy</a>
+                <a href="#">Terms</a>
+            </div>
+            <p class="footer-text">&copy; 2025 pkg. Made with ❤️ for creators everywhere.</p>
         </div>
-        <p>&copy; 2025 pkg. Made with ❤️ for creators everywhere.</p>
     </footer>
 
     <script>
-        function scrollToSection(e){document.getElementById(e).scrollIntoView({behavior:"smooth",block:"start"})}document.querySelectorAll('a[href^="#"]').forEach(e=>{e.addEventListener("click",function(e){e.preventDefault();let t=document.querySelector(this.getAttribute("href"));t&&t.scrollIntoView({behavior:"smooth",block:"start"})})});const observerOptions={threshold:.1,rootMargin:"0px 0px -100px 0px"},observer=new IntersectionObserver(e=>{e.forEach(e=>{e.isIntersecting&&(e.target.style.opacity="1",e.target.style.transform="translateY(0)")})},observerOptions);document.querySelectorAll(".feature-card, .platform-card").forEach(e=>{e.style.opacity="0",e.style.transform="translateY(20px)",e.style.transition="300ms ease-in-out",observer.observe(e)});
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Animate elements on scroll
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.animationDelay = `${Math.random() * 0.3}s`;
+                    entry.target.classList.add('animate-on-scroll');
+                }
+            });
+        }, observerOptions);
+
+        // Observe feature cards
+        document.querySelectorAll('.feature-card').forEach(card => {
+            observer.observe(card);
+        });
+
+        // Add hover effects to platform cards
+        document.querySelectorAll('.platform-card').forEach(card => {
+            card.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-4px) scale(1.02)';
+            });
+            
+            card.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateY(0) scale(1)';
+            });
+        });
+
+        // Navbar background on scroll
+        window.addEventListener('scroll', () => {
+            const navbar = document.querySelector('.navbar');
+            if (window.scrollY > 100) {
+                navbar.style.background = 'rgba(0, 0, 0, 0.95)';
+            } else {
+                navbar.style.background = 'rgba(0, 0, 0, 0.8)';
+            }
+        });
     </script>
 </body>
 </html>
