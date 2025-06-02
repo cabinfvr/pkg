@@ -5,3 +5,6 @@ __pychache__
 *.pyd
 *.log
 *.env
+winvenv/*
+winvenv
+test.py

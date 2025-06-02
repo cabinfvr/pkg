@@ -9,15 +9,15 @@
   },
   "discord": {
     "social_starter": "https://discord.com/users/<username>",
-    "bxl_class": "bxl bxl-discord-alt"
+    "bxl_class": "bxl bx-discord-alt"
   },
   "tiktok": {
     "social_starter": "https://www.tiktok.com/@<username>",
-    "bxl_class": "bxl bxl-tiktok"
+    "bxl_class": "bxl bx-tiktok"
   }, 
   "twitter": {
     "social_starter": "https://twitter.com/<username>",
-    "bxl_class": "bxl bxl-twitter"
+    "bxl_class": "bxl bx-twitter"
   },
   "buy-me-a-coffee": {
     "social_starter": "https://www.buymeacoffee.com/<username>",
@@ -25,83 +25,83 @@
   },
   "kickstarter": {
     "social_starter": "https://www.kickstarter.com/profile/<username>",
-    "bxl_class": "bxl bxl-kickstarter"
+    "bxl_class": "bxl bx-kickstarter"
   },
   "dribbble": {
     "social_starter": "https://dribbble.com/<username>",
-    "bxl_class": "bxl bxl-dribbble"
+    "bxl_class": "bxl bx-dribbble"
   },
   "imdb": {
     "social_starter": "https://www.imdb.com/user/<username>",
-    "bxl_class": "bxl bxl-imdb"
+    "bxl_class": "bxl bx-imdb"
   },
   "slack": {
     "social_starter": "https://<workspace>.slack.com/team/<username>",
-    "bxl_class": "bxl bxl-slack"
+    "bxl_class": "bxl bx-slack"
   },
   "github": {
     "social_starter": "https://github.com/<username>",
-    "bxl_class": "bxl bxl-github"
+    "bxl_class": "bxl bx-github"
   },
   "linkedin": {
     "social_starter": "https://www.linkedin.com/in/<username>",
-    "bxl_class": "bxl bxl-linkedin"
+    "bxl_class": "bxl bx-linkedin"
   },
   "reddit": {
     "social_starter": "https://www.reddit.com/user/<username>",
-    "bxl_class": "bxl bxl-reddit"
+    "bxl_class": "bxl bx-reddit"
   },
   "behance": {
     "social_starter": "https://www.behance.net/<username>",
-    "bxl_class": "bxl bxl-behance"
+    "bxl_class": "bxl bx-behance"
   },
   "medium": {
     "social_starter": "https://medium.com/@<username>",
-    "bxl_class": "bxl bxl-medium"
+    "bxl_class": "bxl bx-medium"
   },
   "messenger": {
     "social_starter": "https://www.messenger.com/t/<username>",
-    "bxl_class": "bxl bxl-messenger"
+    "bxl_class": "bxl bx-messenger"
   },
   "telegram": {
     "social_starter": "https://t.me/<username>",
-    "bxl_class": "bxl bxl-telegram"
+    "bxl_class": "bxl bx-telegram"
   },
   "steam": {
     "social_starter": "https://steamcommunity.com/id/<username>",
-    "bxl_class": "bxl bxl-steam"
+    "bxl_class": "bxl bx-steam"
   },
   "youtube": {
     "social_starter": "https://youtube.com/@<username>",
-    "bxl_class": "bxl bxl-youtube"
+    "bxl_class": "bxl bx-youtube"
   },
   "twitch": {
     "social_starter": "https://www.twitch.tv/<username>",
-    "bxl_class": "bxl bxl-twitch"
+    "bxl_class": "bxl bx-twitch"
   },
   "pinterest": {
     "social_starter": "https://www.pinterest.com/<username>",
-    "bxl_class": "bxl bxl-pinterest"
+    "bxl_class": "bxl bx-pinterest"
   },
   "whatsapp": {
     "social_starter": "https://wa.me/<phone_number>",
-    "bxl_class": "bxl bxl-whatsapp"
+    "bxl_class": "bxl bx-whatsapp"
   },
   "spotify": {
     "social_starter": "https://open.spotify.com/user/<username>",
-    "bxl_class": "bxl bxl-spotify"
+    "bxl_class": "bxl bx-spotify"
   },
   "facebook": {
     "social_starter": "https://www.facebook.com/<username>",
-    "bxl_class": "bxl bxl-facebook"
+    "bxl_class": "bxl bx-facebook"
   },
   "snapchat": {
     "social_starter": "https://www.snapchat.com/add/<username>",
-    "bxl_class": "bxl bxl-snapchat"
+    "bxl_class": "bxl bx-snapchat"
   },
   "instagram": {
     "social_starter": "https://www.instagram.com/<username>",
-    "bxl_class": "bxl bxl-instagram"
+    "bxl_class": "bxl bx-instagram"
   },
   "douyin": {
     "social_starter": "https://www.douyin.com/user/<username>",
@@ -117,6 +117,6 @@
   },
   "tumblr": {
     "social_starter": "https://<username>.tumblr.com",
-    "bxl_class": "bxl bxl-tumblr"
+    "bxl_class": "bxl bx-tumblr"
   }
 }
