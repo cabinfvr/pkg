@@ -1,4 +1,4 @@
-from flask import Flask, render_template, url_for, abort, request, redirect, session, flash, jsonify
+from flask import Flask, render_template, url_for, abort, request, redirect, session, flash, jsonify, send_from_directory
 from helper import *
 from logos import Logos
 import requests
@@ -125,6 +125,10 @@ cdn_service = cdn(supabase, SUPABASE_STORAGE_BUCKET)
 # Configure upload settings
 ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif', 'webp'}
 MAX_FILE_SIZE = 5 * 1024 * 1024  # 5MB
+
+@app.route('/_next/<path:filename>')
+def custom_static(filename):
+    return send_from_directory('_next', filename)
 
 def allowed_file(filename):
     return '.' in filename and \
