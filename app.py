@@ -130,6 +130,10 @@ MAX_FILE_SIZE = 5 * 1024 * 1024  # 5MB
 def custom_static(filename):
     return send_from_directory('_next', filename)
 
+@app.route('/favicon.ico')
+def send_favicon():
+    return send_from_directory('static', 'favicon.ico')
+
 def allowed_file(filename):
     return '.' in filename and \
            filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
