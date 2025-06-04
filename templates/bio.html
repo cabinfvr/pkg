@@ -16,8 +16,7 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='bio.css') }}">
     
     <!-- icon fonts for badges and brands -->
-    <link href="https://cdn.boxicons.com/fonts/basic/boxicons.min.css" rel="stylesheet">
-    <link href="https://cdn.boxicons.com/fonts/brands/boxicons-brands.min.css" rel="stylesheet">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
     
     <!-- tooltip dependencies -->
     <script src="https://unpkg.com/@popperjs/core@2"></script>
@@ -110,7 +109,7 @@
         <button id='link'>
             <a href='{{ link.url }}' class='link'>
                 <!-- link icon --> 
-                <i class='{{ link.icon }}'></i>
+                <i class='bx {{ link.icon }}'></i>
                 <!-- link name -->
                 <span>{{ link.name }}</span>
             </a>

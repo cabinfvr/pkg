@@ -7,7 +7,6 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='pkg.css') }}">
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
     <link rel='icon' href='{{ url_for('static', filename='favicon.ico') }}'>
     <link rel='shortcut icon' href='{{ url_for('static', filename='favicon.ico') }}'>
 </head>
@@ -73,33 +72,41 @@
                 <div id="links-container">
                     {% if user_data.links %}
                         {% for service, info in user_data.links.items() %}
-                            <div class="form-group link-group">
-                                <label for="link_{{ service }}">
-                                    <i class="bx {{ info.bxl_class if info.bxl_class else 'bx-link' }}"></i>
-                                    {{ service.title() }}:
-                                </label>
-                                <input type="url" 
-                                       id="link_{{ service }}" 
-                                       name="link_{{ service }}" 
-                                       value="{{ info.link if info.link else '' }}"
-                                       placeholder="https://{{ service }}.com/username">
+                            <div class="link-item" data-service="{{ loop.index }}">
+                                <div class="link-inputs">
+                                    <input type="text" 
+                                           class="link-name" 
+                                           name="link_name_{{ loop.index }}"
+                                           placeholder="Link name" 
+                                           value="{{ service }}">
+                                    <div class="icon-selector">
+                                        <button type="button" class="icon-btn">
+                                            <i class="bx {{ info.bxl_class if info.bxl_class else 'bx-link' }}"></i>
+                                        </button>
+                                        <input type="hidden" 
+                                               class="icon-value" 
+                                               name="link_icon_{{ loop.index }}" 
+                                               value="{{ info.bxl_class if info.bxl_class else 'bx-link' }}">
+                                        <div class="icon-dropdown">
+                                            <div class="icon-search">
+                                                <input type="text" class="icon-search-input" placeholder="Search icons...">
+                                            </div>
+                                            <div class="icon-grid"></div>
+                                        </div>
+                                    </div>
+                                    <input type="url" 
+                                           class="link-url" 
+                                           name="link_{{ loop.index }}" 
+                                           placeholder="https://example.com/your-profile" 
+                                           value="{{ info.link if info.link else '' }}">
+                                    <button type="button" class="remove-link-btn">×</button>
+                                </div>
                             </div>
                         {% endfor %}
                     {% endif %}
                 </div>
 
-                <div class="form-group">
-                    <label for="new-link-service">Add New Link:</label>
-                    <select id="new-link-service" class="service-select">
-                        <option value="">Select a service...</option>
-                        {% for logo in logos %}
-                            <option value="{{ logo.name.lower() }}" data-icon="{{ logo.bxl_class }}">
-                                {{ logo.name }}
-                            </option>
-                        {% endfor %}
-                    </select>
-                    <button type="button" id="add-link-btn" class="secondary-btn">Add Link</button>
-                </div>
+                <button type="button" id="add-link-btn" class="secondary-btn">+ Add New Link</button>
             </fieldset>
 
             <div class="form-actions">
@@ -130,7 +137,7 @@
                     </div>
                 </div>
                 <div class="social-links" id="preview-links">
-                    <!-- Links will be populated by JavaScript -->
+                    
                 </div>
             </div>
         </section>
@@ -176,12 +183,6 @@
             color: var(--nc-tx-1);
         }
 
-        .form-group label i {
-            margin-right: 0.5rem;
-            width: 20px;
-            text-align: center;
-        }
-
         .form-group small {
             display: block;
             margin-top: 0.25rem;
@@ -189,29 +190,128 @@
             font-size: 0.875rem;
         }
 
-        .link-group {
+        /* Streamlined Link Styling */
+        .link-item {
+            margin-bottom: 1rem;
+            padding: 1rem;
+            background: var(--nc-bg-2);
+            border-radius: 8px;
+            border: 1px solid var(--nc-bg-3);
+        }
+
+        .link-inputs {
+            display: grid;
+            grid-template-columns: 1fr auto 2fr auto;
+            gap: 0.75rem;
+            align-items: center;
+        }
+
+        .link-name {
+            padding: 0.5rem;
+            border: 1px solid var(--nc-bg-3);
+            border-radius: 4px;
+            background: var(--nc-bg-1);
+            color: var(--nc-tx-1);
+        }
+
+        .link-url {
+            padding: 0.5rem;
+            border: 1px solid var(--nc-bg-3);
+            border-radius: 4px;
+            background: var(--nc-bg-1);
+            color: var(--nc-tx-1);
+        }
+
+        .icon-selector {
+            position: relative;
+        }
+
+        .icon-btn {
+            width: 40px;
+            height: 40px;
+            border: 1px solid var(--nc-bg-3);
+            border-radius: 4px;
+            background: var(--nc-bg-1);
+            color: var(--nc-tx-1);
+            cursor: pointer;
             display: flex;
             align-items: center;
-            gap: 1rem;
-            padding: 0.5rem;
-            background: var(--nc-bg-2);
+            justify-content: center;
+            font-size: 1.2rem;
+        }
+
+        .icon-btn:hover {
+            background: var(--nc-bg-3);
+        }
+
+        .icon-dropdown {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            z-index: 1000;
+            background: var(--nc-bg-1);
+            border: 1px solid var(--nc-bg-3);
             border-radius: 4px;
-            margin-bottom: 0.5rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            width: 300px;
+            max-height: 400px;
+            overflow-y: auto;
+            display: none;
         }
 
-        .link-group label {
-            min-width: 120px;
-            margin-bottom: 0;
+        .icon-search {
+            padding: 0.5rem;
+            border-bottom: 1px solid var(--nc-bg-3);
         }
 
-        .link-group input {
-            flex: 1;
-            margin-bottom: 0;
+        .icon-search-input {
+            width: 100%;
+            padding: 0.5rem;
+            border: 1px solid var(--nc-bg-3);
+            border-radius: 4px;
+            background: var(--nc-bg-2);
+            color: var(--nc-tx-1);
         }
 
-        .service-select {
-            width: 200px;
-            margin-right: 1rem;
+        .icon-grid {
+            display: grid;
+            grid-template-columns: repeat(8, 1fr);
+            gap: 0.25rem;
+            padding: 0.5rem;
+        }
+
+        .icon-option {
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            border-radius: 4px;
+            color: var(--nc-tx-1);
+        }
+
+        .icon-option:hover {
+            background: var(--nc-bg-3);
+        }
+
+        .remove-link-btn {
+            width: 30px;
+            height: 30px;
+            border: 1px solid #dc3545;
+            border-radius: 4px;
+            background: transparent;
+            color: #dc3545;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+        }
+
+        .remove-link-btn:hover {
+            background: #dc3545;
+            color: white;
         }
 
         .form-actions {
@@ -360,60 +460,139 @@
         nav a:hover {
             color: var(--nc-lk-2);
         }
+
+        @media (max-width: 768px) {
+            .link-inputs {
+                grid-template-columns: 1fr;
+                gap: 0.5rem;
+            }
+            
+            .icon-dropdown {
+                width: 250px;
+            }
+        }
     </style>
 
     <script>
         $(document).ready(function() {
-            // Initialize Select2 for service selection
-            $('.service-select').select2({
-                theme: 'custom',
-                placeholder: 'Select a service...',
-                allowClear: true
-            });
+            const popularIcons = [
+                'bx-link', 'bxl-twitter', 'bxl-facebook', 'bxl-instagram', 'bxl-linkedin', 
+                'bxl-github', 'bxl-youtube', 'bxl-discord', 'bxl-reddit', 'bxl-spotify',
+                'bxl-steam', 'bxl-twitch', 'bxl-tiktok', 'bxl-pinterest', 'bxl-telegram',
+                'bx-globe', 'bx-envelope', 'bx-phone', 'bx-home', 'bx-briefcase',
+                'bx-heart', 'bx-star', 'bx-camera', 'bx-music', 'bx-game',
+                'bx-code', 'bx-book', 'bx-paint', 'bx-coffee', 'bx-food'
+            ];
+
+            let linkCounter = {{ user_data.links|length if user_data.links else 0 }};
+
+            // Initialize icon dropdowns
+            function initializeIconDropdown(container) {
+                const iconGrid = container.find('.icon-grid');
+                iconGrid.empty();
+                
+                popularIcons.forEach(iconClass => {
+                    const iconOption = $(`<div class="icon-option" data-icon="${iconClass}"><i class="bx ${iconClass}"></i></div>`);
+                    iconGrid.append(iconOption);
+                });
+            }
 
             // Add new link functionality
             $('#add-link-btn').click(function() {
-                const service = $('#new-link-service').val();
-                const serviceName = $('#new-link-service option:selected').text();
-                const icon = $('#new-link-service option:selected').data('icon');
-                
-                if (service) {
-                    // Check if link already exists
-                    if ($(`#link_${service}`).length > 0) {
-                        alert('Link for this service already exists!');
-                        return;
-                    }
-                    
-                    const linkHtml = `
-                        <div class="form-group link-group">
-                            <label for="link_${service}">
-                                <i class="bx ${icon || 'bx-link'}"></i>
-                                ${serviceName}:
-                            </label>
-                            <input type="url" 
-                                   id="link_${service}" 
-                                   name="link_${service}" 
-                                   placeholder="https://${service}.com/username"
-                                   class="link-input">
-                            <button type="button" class="remove-link-btn secondary-btn">Remove</button>
+                linkCounter++;
+                const linkHtml = `
+                    <div class="link-item" data-service="${linkCounter}">
+                        <div class="link-inputs">
+                            <input type="text" class="link-name" name="link_name_${linkCounter}" placeholder="Link name" value="">
+                            <div class="icon-selector">
+                                <button type="button" class="icon-btn">
+                                    <i class="bx bx-link"></i>
+                                </button>
+                                <input type="hidden" class="icon-value" name="link_icon_${linkCounter}" value="bx-link">
+                                <div class="icon-dropdown">
+                                    <div class="icon-search">
+                                        <input type="text" class="icon-search-input" placeholder="Search icons...">
+                                    </div>
+                                    <div class="icon-grid"></div>
+                                </div>
+                            </div>
+                            <input type="url" class="link-url" name="link_${linkCounter}" placeholder="https://example.com/your-profile">
+                            <button type="button" class="remove-link-btn">×</button>
                         </div>
-                    `;
+                    </div>
+                `;
+                
+                $('#links-container').append(linkHtml);
+                initializeIconDropdown($('#links-container .link-item:last'));
+                updatePreview();
+            });
+
+            // Initialize existing icon dropdowns
+            $('.link-item').each(function() {
+                initializeIconDropdown($(this));
+            });
+
+            // Icon selector functionality
+            $(document).on('click', '.icon-btn', function(e) {
+                e.preventDefault();
+                const dropdown = $(this).siblings('.icon-dropdown');
+                $('.icon-dropdown').not(dropdown).hide();
+                dropdown.toggle();
+            });
+
+            // Icon selection
+            $(document).on('click', '.icon-option', function() {
+                const iconClass = $(this).data('icon');
+                const iconSelector = $(this).closest('.icon-selector');
+                const iconBtn = iconSelector.find('.icon-btn i');
+                const iconValue = iconSelector.find('.icon-value');
+                
+                iconBtn.attr('class', `bx ${iconClass}`);
+                iconValue.val(iconClass);
+                $(this).closest('.icon-dropdown').hide();
+                updatePreview();
+            });
+
+            // Icon search functionality
+            $(document).on('input', '.icon-search-input', function() {
+                const searchTerm = $(this).val().toLowerCase();
+                const iconGrid = $(this).closest('.icon-dropdown').find('.icon-grid');
+                
+                if (searchTerm === '') {
+                    iconGrid.empty();
+                    popularIcons.forEach(iconClass => {
+                        const iconOption = $(`<div class="icon-option" data-icon="${iconClass}"><i class="bx ${iconClass}"></i></div>`);
+                        iconGrid.append(iconOption);
+                    });
+                } else {
+                    const filteredIcons = popularIcons.filter(icon => 
+                        icon.toLowerCase().includes(searchTerm)
+                    );
                     
-                    $('#links-container').append(linkHtml);
-                    $('#new-link-service').val('').trigger('change');
-                    updatePreview();
+                    iconGrid.empty();
+                    filteredIcons.forEach(iconClass => {
+                        const iconOption = $(`<div class="icon-option" data-icon="${iconClass}"><i class="bx ${iconClass}"></i></div>`);
+                        iconGrid.append(iconOption);
+                    });
+                }
+            });
+
+            // Close dropdowns when clicking outside
+            $(document).click(function(e) {
+                if (!$(e.target).closest('.icon-selector').length) {
+                    $('.icon-dropdown').hide();
                 }
             });
 
             // Remove link functionality
             $(document).on('click', '.remove-link-btn', function() {
-                $(this).closest('.link-group').remove();
+                $(this).closest('.link-item').remove();
                 updatePreview();
             });
 
             // Update preview on input changes
             $('#avatar_link, #quote').on('input', updatePreview);
-            $(document).on('input', '.link-input', updatePreview);
+            $(document).on('input', '.link-name, .link-url', updatePreview);
 
             // Update preview function
             function updatePreview() {
@@ -429,17 +608,16 @@
                 const linksContainer = $('#preview-links');
                 linksContainer.empty();
                 
-                $('.link-input').each(function() {
-                    const url = $(this).val();
-                    if (url) {
-                        const service = $(this).attr('name').replace('link_', '');
-                        const icon = $(this).closest('.link-group').find('i').attr('class');
-                        const serviceName = $(this).closest('.link-group').find('label').text().replace(':', '').trim();
-                        
+                $('.link-item').each(function() {
+                    const name = $(this).find('.link-name').val();
+                    const url = $(this).find('.link-url').val();
+                    const iconClass = $(this).find('.icon-btn i').attr('class');
+                    
+                    if (name && url) {
                         const linkHtml = `
                             <a href="${url}" class="social-link" target="_blank" rel="noopener noreferrer">
-                                <i class="${icon}"></i>
-                                ${serviceName}
+                                <i class="${iconClass}"></i>
+                                ${name}
                             </a>
                         `;
                         linksContainer.append(linkHtml);

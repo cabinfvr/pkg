@@ -568,6 +568,7 @@ def onboarding():
     # Pass username to template so it can be displayed (read-only)
     return render_template('onboarding.html', url_for=url_for, logos=logos.get_all(), clean_string=clean_string, username=username)
 
+
 # Dashboard route
 @app.route('/dashboard')
 @login_required
@@ -593,13 +594,33 @@ def dashboard_edit():
             
             # Process links
             links = {}
-            for key, value in request.form.items():
-                if key.startswith('link_') and value.strip():
+            
+            # Find all link services by looking for fields that start with 'link_' 
+            # but exclude the name and icon fields
+            link_services = set()
+            for key in request.form.keys():
+                if key.startswith('link_') and not key.startswith('link_name_') and not key.startswith('link_icon_'):
                     service = key.replace('link_', '')
+                    link_services.add(service)
+            
+            # Process each service
+            for service in link_services:
+                url = request.form.get(f'link_{service}', '').strip()
+                name = request.form.get(f'link_name_{service}', '').strip()
+                icon = request.form.get(f'link_icon_{service}', '').strip()
+                
+                # Only add if URL exists
+                if url:
+                    # Use the name as the key if provided, otherwise use service
+                    link_key = name if name else service
+                    
+                    # Get brand info if it exists
                     brand_info = logos.get_brand(service)
-                    links[service] = {
-                        'link': value.strip(),
-                        'bxl_class': brand_info.get('bxl_class', f'bx-{service}')
+                    default_icon = brand_info.get('bxl_class', f'bx-{service}') if brand_info else 'bx-link'
+                    
+                    links[link_key] = {
+                        'link': url,
+                        'bxl_class': icon if icon else default_icon
                     }
             
             # Update user data
@@ -628,7 +649,6 @@ def dashboard_edit():
     
     return render_template('dashboard_edit.html', url_for=url_for, user_data=user_data, logos=logos.get_all(), clean_string=clean_string)
 
-# Original routes
 @app.route('/')
 def home():
     active_user_count = get_user_count()
